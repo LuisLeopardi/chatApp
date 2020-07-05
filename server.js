@@ -16,10 +16,11 @@ app.use(session({
   name:'chatSession',
   secret: process.env.SESSION_SECRET,
   resave: false,
+  rolling:true,
   saveUninitialized: false,
   store: new MongoStore({ mongooseConnection: mongoose.connection }),
   cookie: {
-    maxAge: 600000000000000,
+    maxAge: 60 * 60 * 60 * 24,
     secure: true,
     httpOnly: true,
   }
@@ -29,6 +30,7 @@ app.use(session({
 // CONECTIONS
 
 if(process.env.NODE_ENV === 'production') {
+  app.set('trust proxy', 1)
   app.use(express.static('client/build'));
   app.get('*', (req, res)=>{
     res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'))
@@ -37,7 +39,7 @@ if(process.env.NODE_ENV === 'production') {
 
 const server = require('http').createServer(app);
 const port = process.env.PORT || 5000;
-app.listen(port);
+server.listen(port);
 const io = require('socket.io')(server);
 mongoose
 .connect(
