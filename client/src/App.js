@@ -62,9 +62,8 @@ componentDidMount(){
   method: "GET",
   credentials: 'include'
   })
-  .then(response => response.json())
+  .then(response => /*response.json()*/console.log(response))
   .then(data => {
-    console.log(data)
       if( data===null ) {
           this.setState({ data: false, isFinishedLoading:true })
       } else {
