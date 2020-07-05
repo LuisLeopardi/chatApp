@@ -62,7 +62,7 @@ componentDidMount(){
   method: "GET",
   credentials: 'include'
   })
-  .then(response => {response.body.json();console.log(response)})
+  .then(response => response.clone().json())
   .then(data => {
     console.log(data)
       if( data===null ) {
