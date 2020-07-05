@@ -35,7 +35,7 @@ if(process.env.NODE_ENV === 'production') {
   })
 }
 
-const server = require('http').createServer(app);
+const server = require('https').createServer(app);
 const port = process.env.PORT || 5000;
 server.listen(port);
 const io = require('socket.io')(server);
