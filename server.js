@@ -10,7 +10,7 @@ const path = require('path');
 require('dotenv').config()
 // MIDDLEWARES
 
-app.use(cors({credentials:true, origin:'https://chatapp-luisleopardi.herokuapp.com/'}))
+app.use(cors({credentials:true, origin:'https://chatapp-luisleopardi.herokuapp.com/'/*'http://localhost:3000'*/}))
 app.use(express.json());
 app.use(session({
   name:'chatSession',

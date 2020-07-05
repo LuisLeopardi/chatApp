@@ -58,7 +58,7 @@ logout = () => {
 }
 
 componentDidMount(){
-  fetch('https://chatapp-luisleopardi.herokuapp.com/', {
+  fetch('https://chatapp-luisleopardi.herokuapp.com/'/*'http://localhost:5000'*/, {
   method: "GET",
   credentials: 'include'
   })
@@ -79,6 +79,10 @@ componentDidMount(){
             }
           })
         }
+  })
+  .catch(e=>{
+    console.log(e)
+    this.setState({ data: false, isFinishedLoading:true })
   })
 }
 
