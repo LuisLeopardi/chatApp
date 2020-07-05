@@ -62,10 +62,14 @@ componentDidMount(){
   method: "GET",
   credentials: 'include'
   })
-  .then(response => /*response.json()*/console.log(response))
+  .then(response => {response.json();console.log(response)})
   .then(data => {
+    console.log(data)
       if( data===null ) {
           this.setState({ data: false, isFinishedLoading:true })
+      } else if (data.user === null) {
+          this.setState({ data: false, isFinishedLoading:true })
+          console.log(data)
       } else {
           socket.emit('activeUser', {username:data.username, room:this.state.isInRoom, avatar:data.avatar })
           this.setState({username:data.username, avatar:data.avatar, isFinishedLoading:true})
