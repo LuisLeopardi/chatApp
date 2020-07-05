@@ -19,7 +19,7 @@ import pic7 from './img/avatars/pic7.svg';
 import chat from './img/chat.svg';
 import group from './img/group.svg';
 import io from 'socket.io-client';
-let socket = io('localhost:5000');
+let socket = io('https://chatapp-luisleopardi.herokuapp.com/');
 
 class App extends Component {
 
@@ -64,6 +64,7 @@ componentDidMount(){
   })
   .then(response => response.json())
   .then(data => {
+    console.log(data)
       if( data===null ) {
           this.setState({ data: false, isFinishedLoading:true })
       } else {
