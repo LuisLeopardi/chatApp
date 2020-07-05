@@ -1,0 +1,56 @@
+const mongoose = require('mongoose');
+const joi = require('@hapi/joi');
+const jwt = require('jsonwebtoken');
+
+const UserSchema = new mongoose.Schema ({
+    name: {
+        type: String,
+        required: true,
+        minlength: 3,
+        maxlength: 10
+      },
+      email: {
+        type: String,
+        required: true,
+        minlength: 3,
+        maxlength: 50
+      },
+      password: {
+        type: String,
+        required: true,
+        minlength: 3,
+        maxlength: 1000
+      },
+      avatar: {
+        type: String,
+        required: true,
+      },
+      chats: [
+        {
+          _id: String,
+          messages:[
+            {
+              type:Object,
+              sender:String,
+              body:String
+            }
+          ]
+        }
+      ]
+})
+
+function validateUser (user) {
+
+    const schema = joi.object({
+        name:joi.string().required(),
+        email:joi.string().required().email(),
+        password:joi.string().required()
+    })
+
+    return schema.validate(user)
+
+}
+
+exports.validateUser = validateUser
+
+module.exports = User = mongoose.model('users', UserSchema);

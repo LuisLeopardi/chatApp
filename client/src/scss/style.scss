@@ -1,0 +1,738 @@
+@import '_config.scss';
+
+* {
+    position: relative;
+    text-decoration: none;
+    box-sizing: border-box;
+    font-family: "Roboto", sans-serif;
+    list-style: none;
+    color:#000;
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+.wait {
+    border-radius: 50%;
+    border: solid rgb(73, 73, 73);
+    border-width: 0 2px 2px 2px;
+    animation: loading 0.5s infinite;
+    width: 20px;
+    height: 20px;
+    margin: 20% auto 20% auto;
+}
+
+.loading {
+    border-radius: 50% !important;
+    border-width: 0 2px 2px 2px !important;
+    animation: loading 0.5s infinite;
+    width: 20px !important;
+    height: 20px !important;
+    outline: none;
+}
+
+@keyframes loading {
+    0%{
+        transform: rotate(0deg);
+    }50%{
+        transform: rotate(180deg);
+    }100%{
+        transform: rotate(360deg);
+    }
+}
+
+.none {
+    display:none;
+}
+
+.userPicAndName{
+    @include flex-center-center;
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    height: 100%;
+    background-color: rgb(235, 237, 255);
+    img {
+        height: 90%;
+        border-radius: 50%;
+        margin: 0 0 0 5px;
+    }
+}
+
+.optionsWrap {
+    @include flex-center-center;
+}
+
+.username {
+    font-size: 85%;
+    margin: 0 0 0 6px;
+    &:before {
+        position: absolute;
+        top: 50%;
+        right: -50%;
+        transform: translateY(-50%);
+        height: 0;
+        width: 0;
+        border-left: 4px solid transparent;
+        border-right: 4px solid transparent;
+        border-top: 4px solid rgb(27, 27, 27);
+        content: "";
+    }
+}
+
+.options {
+    @include flex-vertical-center;
+    position: absolute;
+    top: 38px;
+    left: -30px;
+    width: 130px;
+    z-index: 1000;
+    background-color: rgb(228, 231, 255);
+    border-radius: 10px;
+    div {
+        @include flex-center-around;
+        border: solid rgb(48, 48, 48);
+        border-width: 0 0 1px 0;
+        width: 100%;
+        padding: 8px 0 8px 0;
+        &:first-of-type {
+            border-radius: 10px 10px 0 0;
+        }
+        &:last-of-type a {
+            color: rgba(255, 5, 5, 1);
+        }
+        &:hover {
+            background-color: rgb(174, 200, 255);
+        }
+    }
+    a {
+        text-align: center;
+        color: rgb(37, 37, 37);
+        font-size: 80%;
+        letter-spacing: 1px;
+    } 
+    img {
+        height: 15px;
+    }
+    &:before {
+        position: absolute;
+        top: -2px;
+        left: 5px;
+        transform: translateY(-50%);
+        height: 0;
+        width: 0;
+        border-left: 14px solid transparent;
+        border-right: 14px solid transparent;
+        border-bottom: 14px solid rgb(228, 231, 255);
+        content: "";
+    }
+}
+
+.navigation {
+    @include flex-center-end;
+    height: 40px;
+    padding: 10px 0 10px 0;
+    background-color: rgb(235, 237, 255);
+}
+
+.links {
+    padding: 5px;
+    font-size: 80%;
+    margin: 0 5px 0 5px;
+    text-align: center;
+    width: 60px;
+    letter-spacing: 1px;
+    font-size: 80%;
+    color:#fff;
+}
+
+.icon {
+    @include flex-center-center;
+    height: 35px;
+    width: 35px;
+    margin: 0 3% 0 3%;
+    border: solid #ebedff;
+    border-width: 0 0 2px 0;
+    cursor: pointer;
+    img {
+        height: 70%;
+    }
+}
+
+.active {
+    border: solid rgb(31, 102, 255);
+    border-width: 0 0 2px 0;
+}
+
+.register {
+    background-color: rgb(39, 201, 39);
+}
+
+.login {
+    background-color: rgb(0, 110, 255);
+}
+
+.logo {
+    position: absolute;
+    left: 5px;
+    color: rgb(43, 43, 43) !important;
+    font-weight: bold;
+    font-size: 130% !important;
+    width: auto !important;
+    background-color: rgb(235, 237, 255);
+}
+
+.loginInvitation {
+    @include flex-vertical-center;
+    margin: 10vh auto 0 auto;
+    border: 2px solid rgb(147, 147, 255);
+    background-color: rgb(228, 228, 228);
+    box-shadow: 0 1px 15px 5px rgba(147, 147, 255, 0.514);
+    border-radius: 50%;
+    height: 50vh;
+    width: 50vh;
+    h1 {
+        font-size: 120%;
+        color: rgb(44, 44, 44);
+        background-color: rgb(228, 228, 228);
+    }
+    img {
+        width: 50%;
+        max-width: 300px;
+        background-color: rgb(228, 228, 228);
+    }
+}
+
+.LoginAndRegisteForm {
+    @include flex-vertical-center;
+    border: 2px solid rgb(62, 123, 255);
+    width: 95%;
+    max-width: 800px;
+    min-height:50vh;
+    margin: 50px auto 0 auto;
+    box-shadow: 0 1px 30px 5px rgb(167, 167, 167);
+    padding: 10px;
+    border-radius: 5px;
+    h1 {
+        font-size: 100%;
+        text-align: center;
+        width: 100%;
+        color: rgb(66, 66, 66);
+    }
+    h2 {
+        margin: 10px 0 10px 0;
+        font-size: 100%;
+        text-align: center;
+        width: 100%;
+        font-weight: normal;
+    }
+    label {
+        width: 100%;
+        height: 50px;
+        margin: 0 0 5px 0;
+        input {
+            border-radius: 3px;
+            padding: 3px;
+            width: 100%;
+            border: 1px solid rgb(204, 204, 204);
+            transition: 0.1s linear all;
+            &:hover, &:focus {
+                border: 1px solid rgb(0, 119, 255);
+            }
+        }
+        p {
+            color:rgb(61, 61, 61);
+            font-size: 80%;
+            margin: 0 0 5px 0;
+        }
+    }
+    button {
+        width: 90%;
+        max-width: 330px;
+        height: 30px;
+        border-radius: 5px;
+        border: 1px solid rgb(0, 140, 255);
+    }
+}
+
+.red {
+    color: rgb(255, 12, 4);
+}
+
+.green {
+    color: rgb(0, 179, 24);
+}
+
+.chatRoomUl {
+    @include flex-vertical-center;
+    width: 100%;
+}
+
+.chatRoomItem {
+    @include flex-center-center;
+    cursor: pointer;
+    width: 90%;
+    height: 50px;
+    border-width: 0 0 2px 0;
+    margin: 20px 0 20px 0;
+    transform: translateX(-10px);
+    transition: all 0.1s linear;
+    p {
+        color: rgb(26, 26, 26);
+        margin: 0 0 0 10px;
+        font-size: 100%;
+        border: solid rgb(26, 26, 26);
+        font-weight: bold;
+        border-width: 2px 2px 2px 0;
+        border-radius: 5px;
+        padding: 10px 10px 10px 40px;
+        width: 110px;
+        transform: translateX(-3px);
+    }
+    img {
+        width:130%;
+        max-width: 60px;
+        transform:translateX(60%);
+        z-index:10000
+    }
+}
+
+.lobby {
+    display:flex;
+}
+
+.usersOnline {
+    display: flex;
+    background-color: rgb(241, 241, 241);
+    width:0%;
+    height: 100vh;
+    overflow: auto;
+    opacity: 0;
+    border: solid rgb(184, 184, 184);
+    border-width: 0 1px 0 0;
+}
+
+.close {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    width: 20px;
+    cursor: pointer;
+}
+
+.deploy {
+    opacity: 1;
+    width:50%;
+    padding: 30px 5px 0 5px;
+}
+
+.userContainer {
+    @include flex-center-around;
+    height: 50px;
+    width:100%;
+    margin: 10px 0 10px 0;
+    border: 1px solid rgb(179, 179, 179);
+    background-color: rgb(255, 255, 255);
+    border-radius: 5px;
+    opacity: 1;
+    transition: 0.5s ease-in-out all;
+}
+
+.userIcon {
+    height: 40px;
+    width: 40px;
+}
+
+.opacity {
+    opacity: 0;
+}
+
+.userInfoWrap {
+    @include flex-vertical-center;
+    div {
+        @include flex-center-center;
+        display: flex;
+        height: 13px;
+        img {
+            height: 80%;
+        }
+        p {
+            font-size: 70%;
+            cursor: default;
+        }
+    }
+}
+
+.sendMessage {
+    height: 50%;
+    cursor: pointer;
+    transition: 0.3s linear all;
+    &:hover {
+        transform: translateY(-2px);
+    }
+}
+
+.onlineUsername {
+    color: rgb(29, 29, 29)(36, 33, 33);
+    font-weight: bold;
+    font-size: 90%;
+    cursor: default;
+}
+
+.userLocation {
+    color: rgb(104, 104, 104);
+}
+
+.dashboard{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.smaller {
+    width: 50%;
+}
+
+.dashboardHeadline {
+    @include flex-vertical-center;
+    width: 100%;
+    padding: 0 0 20px 0;
+    h1 {
+        width: 100%;
+        text-align: center;
+        margin: 20px 0 15px 0;
+        font-size: 110%;
+        color: rgb(61, 61, 61);
+    }
+    div {
+        @include flex-center-center;
+        width: 40px;
+        height: 40px;
+        border: 2px solid rgb(69, 101, 122);
+        border-radius: 50%;
+    }
+    img {
+        width: 65%;
+    }
+    &::before, &::after{
+        position: absolute;
+        top: 74px;
+        left: 3%;
+        content: '';
+        width: 30%;
+        height: 2px;
+        background-color: rgb(69, 101, 122);
+    }
+    &::after {
+        left:unset;
+        right: 1%;
+    }
+}
+
+
+.seeWhosOnline {
+    @include flex-center-center;
+    border: 1px solid rgb(0, 184, 0);
+    background-color: rgb(235, 235, 235);
+    box-shadow: 1px 1px 10px 3px rgba(0, 0, 0, 0.349);
+    border-radius: 10px;
+    position: fixed;
+    bottom: 10px;
+    left: 5px;
+    padding: 10px 5px 10px 5px;
+    cursor: pointer;
+    transition: 0.3s ease-in-out all;
+    img {
+        height: 17px;
+        margin: 0 0 0 5px;
+    }
+    span {
+        background-color: rgb(39, 201, 39);
+        color: #fff;
+        font-size: 80%;
+        padding: 3px 6px 3px 6px;
+        font-weight: bold;
+        border-radius: 50%;
+        margin: 0 3px 0 0;
+    }
+    p {
+        color: rgb(34, 34, 34);
+        font-weight: bold;
+    }
+}
+
+.chat {
+    margin: 0 auto 0 auto;
+    max-width: 800px;
+    width: 100%;
+    padding: 10px 0 0 0;
+}
+
+.chatTitle {
+    @include flex-center-start;
+    padding: 5px;
+    background-color: #fff;
+    width: 100%;
+    margin: auto;
+    h1 {
+        font-size: 100%;
+        color: rgb(32, 32, 32);
+    }
+}
+
+.chatMessages, .chatInputs {
+    width: 100%;
+    padding: 5px;
+    margin: auto;
+    background:#fff;
+}
+
+.chatMessages {
+    height: 80vh;
+    overflow: auto;
+    padding: 0 0 40px 0;
+}
+
+.chatInputs {
+    background-color: #fff;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    @include flex-center-center;
+    button {
+        height: 30px;
+        background-color: rgb(0, 119, 255);
+        color: #fff;
+        font-size: 80%;
+        border: none;
+        width: 20%;
+    }
+    input {
+        width: 80%;
+        height: 30px;
+        padding: 0 5px 0 5px;
+        outline: none;
+    }
+}
+
+.message, .yourMessage {
+    clear:both;
+    float:left;
+    margin: 5px 0 5px 0;
+    padding:10px;
+    background-color: #0356fc;
+    border-radius:10px;
+    p {
+        color:#fff;
+        background-color: inherit;
+    }
+}
+
+.yourMessage {
+    float:right;
+    background-color: #dbdbdb;
+    text-align: right;
+    p{
+        color:#000;
+        width:100%;
+        word-wrap: break-word;
+    } 
+}
+
+.privateMessage {
+    margin: 20px 0 0 0;
+    padding: 0 0 50px 0;
+    b {
+        font-size: 100%;
+        padding: 10px;
+    }
+    width: 100%;
+}
+
+.privateMessageContainer{
+    height: 50vh;
+    overflow: auto;
+}
+
+.sender {
+    font-size: 60%;
+}
+
+.profile {
+    a {
+        position: absolute;
+        left: 5px;
+        top: 5px;
+        z-index: 100000000;
+    }
+    @include flex-vertical-center;
+}
+
+.return {
+    margin: 0 5px 0 5px;
+    padding: 5px;
+    background-color: #0077ff;
+    color: #fff;
+    font-size: 80%;
+}
+
+.profileInfoWrap {
+    @include flex-center-around;
+    padding: 40px 5px 5px 5px;
+    div {
+        width: 100%;
+    }
+}
+
+.changeUsername {
+    position: absolute;
+    top: 10px;
+    right: 5px;
+    width: 30px;
+    cursor: pointer;
+}
+
+.usernameInput {
+    margin: 0 10px 0 10px;
+    border: none;
+    background-color: #fff;
+    text-align: center;
+    color: rgb(63, 63, 63);
+    font-size: 110%;
+    font-weight: bold;
+    width: 100%;
+    height: 30px;
+}
+
+.confirmNameChange {
+    @include flex-vertical-center;
+    padding: 10px 0 0 0;
+    p {
+        cursor: pointer;
+    }
+    b {
+        cursor: default;
+    }
+    span {
+        @include flex-center-around;
+        width: 100%;
+    }
+}
+
+.editStage {
+    background-color: rgb(235, 235, 235);
+    color: rgb(75, 75, 75);
+    border: 2px solid rgb(54, 141, 255);
+    outline: none;
+}
+
+.profileAvatar {
+    width: 100%;
+    max-width: 300px;
+}
+
+.changeAvatar {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    margin: 30px 0 0 0;
+    background-color: rgb(27, 27, 27);
+    h2 {
+        font-weight: normal;
+        color: #fff;
+        width: 100%;
+        text-align: center;
+    }
+    img {
+        width: 100%;
+    }
+}
+
+.avatarWrap {
+    width: 40px;
+    margin: 5px 10px 5px 10px;
+    cursor: pointer;
+}
+
+.confirm {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    position: fixed;
+    left: 10vw;
+    width: 80vw;
+    height: 40vw;
+    max-height: 200px;
+    top: 50%;
+    background-color: #e6e4ff;
+    padding: 10px;
+    border-radius: 15px;
+    box-shadow: 0 0 35px 18px rgb(65, 65, 65);
+    animation: up 0.3s linear;
+    z-index: 10000;
+}
+
+.selectavatar {
+    @include flex-center-center;
+    width: 100%;
+    p {
+        color: rgb(36, 36, 36);
+        font-weight: bold;
+    }
+    img {
+        height: 40px;
+        width: 40px;
+        margin: 0 8px 0 0;
+    }
+}
+
+.yesOrNo {
+    @include flex-center-around;
+    width: 100%;
+    p {
+        border: 2px solid;
+        padding: 5px;
+        width: 80px;
+        border-radius: 10px;
+        text-align: center;
+        letter-spacing: 1px;
+    }
+    .yes {
+        color: rgb(0, 185, 0);
+        border-color: rgb(0, 185, 0);
+    }
+    .no {
+        color: rgb(255, 21, 21);
+        border-color: rgb(255, 21, 21);
+    }
+}
+
+@keyframes up {
+    0% {
+        transform: translateY(20px);
+        opacity: 0;
+    } 25% {
+        transform: translateY(15px);
+    } 50% {
+        transform: translateY(10px);
+        opacity: 0.5;
+    } 75% {
+        transform: translateY(5px);
+    } 100% {
+        transform: translateY(0px);
+        opacity: 1;
+    }
+}
+
+.noUserSelected {
+    font-weight: bold;
+    margin: 20px 0 0 0;
+    padding: 10px;
+    color: rgb(31, 31, 31);
+    text-align: center;
+}
+
