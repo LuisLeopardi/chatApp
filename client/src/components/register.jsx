@@ -15,12 +15,6 @@ register = e => {
     this.setState({isLoading:true})
     const {name,email,password,confirmPass} = this.state;
 
-    const payload = {
-        name,
-        email,
-        password
-    }
-
     if (password !== confirmPass) {
         this.setState({ msg: {body:'passwords do not match', type: 'error'}, isLoading:false })
     } else if (!password || !name || !email || !confirmPass) {
@@ -35,7 +29,7 @@ register = e => {
         this.setState({ msg: {body:'the username can not have more than 20 characters', type: 'error'}, isLoading:false })
     } else {
         fetch('https://chatapp-luisleopardi.herokuapp.com/register', {
-        body: JSON.stringify({payload}),
+        body: JSON.stringify({name,email,password}),
         method: "post",
             headers: {
             'Accept': 'application/json',
@@ -46,11 +40,11 @@ register = e => {
         })
         .then(res=> res.json())
         .then(data=>{
-            /*this.setState({ msg: {
+            this.setState({ msg: {
                 type: data.type,
                 body: data.msg
             }, isLoading:false  
-        })*/
+        })
         console.log(data)
         })
         .catch(e=>{
