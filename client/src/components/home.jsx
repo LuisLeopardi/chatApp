@@ -122,7 +122,7 @@ const PrivateChat = ({username, reciver, selected, usersSidebarClass}) => {
     const focusView = useRef(null)
 
     const getMessages = () => {
-        fetch('https://chatapp-luisleopardi.herokuapp.com/', {
+        fetch('https://chatapp-luisleopardi.herokuapp.com/home', {
             method: "post",
             credentials: 'include',
             headers: {

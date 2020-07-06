@@ -21,7 +21,7 @@ router.post('/', auth, async (req,res)=> {
         const user = await User.findById(res.locals.token.id)
         const { name, avatar } = user
         res.json({username:name, avatar})
-    } else {
+    } else if(req.body.function==='getMessages') {
         const {username, reciver} = req.body;
 
         const user = await User.findOne({name:username})
@@ -33,7 +33,6 @@ router.post('/', auth, async (req,res)=> {
         res.status(200).send(messages)
     }
 
-    
 })
 
 
