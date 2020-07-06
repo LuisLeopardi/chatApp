@@ -10,7 +10,7 @@ const schema = joi.object({
     name:joi.string().min(3).max(20).required(),
     email:joi.string().required().email(),
     password:joi.string().max(100).required()
-  })
+})
 
 router.post('/', async (req,res)=>{
 
@@ -22,7 +22,7 @@ router.post('/', async (req,res)=>{
         if (details==='"email" must be a valid email') {
             res.json({msg:'email does not exist',type:'error'});
         } else {
-            res.json({msg:details,type:'error'});
+            res.json({msg:name,type:'error'});
         }
     }
 
