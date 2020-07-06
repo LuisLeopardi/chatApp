@@ -34,7 +34,7 @@ register = e => {
     } else if (name.length > 20) {
         this.setState({ msg: {body:'the username can not have more than 20 characters', type: 'error'}, isLoading:false })
     } else {
-        fetch('https://chatapp-luisleopardi.herokuapp.com//register', {
+        fetch('https://chatapp-luisleopardi.herokuapp.com/register', {
         body: JSON.stringify({payload}),
         method: "post",
             headers: {
@@ -44,10 +44,7 @@ register = e => {
         },
         credentials: 'include'
         })
-        .then(res=>{
-            console.log(res)
-            return res.json()
-        })
+        .then(res=> res.json())
         .then(data=>{
             this.setState({ msg: {
                 type: data.type,
@@ -56,7 +53,6 @@ register = e => {
         })
         })
         .catch(e=>{
-            console.log(e)
             this.setState({ msg: {
                 type: 'error',
                 body: 'unknow error, please try again later'

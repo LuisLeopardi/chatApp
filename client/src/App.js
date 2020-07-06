@@ -70,12 +70,10 @@ componentDidMount(){
   })
   .then(res => res.json())
   .then(data => {
-    console.log(data)
       if( !data ) {
           this.setState({ data: false, isFinishedLoading:true })
       } else if (data.user === null) {
           this.setState({ data: false, isFinishedLoading:true })
-          console.log(data)
       } else {
           socket.emit('activeUser', {username:data.username, room:this.state.isInRoom, avatar:data.avatar })
           this.setState({username:data.username, avatar:data.avatar, isFinishedLoading:true})
@@ -90,7 +88,6 @@ componentDidMount(){
         }
   })
   .catch(e=>{
-    console.log(e)
     this.setState({ data: false, isFinishedLoading:true })
   })
 }
