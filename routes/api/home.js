@@ -6,7 +6,7 @@ const User = require('../../models/users')
 
 router.get('/', auth, async (req,res)=> {
 
-    if (!res.locals.token) return res.status(400).json({user:null});
+    if (!res.locals.token) return /*res.status(404).json({user:null});*/res.json({user:null});
     const user = await User.findById(res.locals.token.id)
     const { name, avatar } = user
     //res.send({username:name, avatar})
