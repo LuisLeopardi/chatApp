@@ -15,17 +15,25 @@ router.get('/', auth, async (req,res)=> {
 
 router.post('/', auth, async (req,res)=> {
 
-    if (!res.locals.token) return res.status(400).send(false);
+    if (!res.locals.token) return res.status(400).json({user:null});
 
-    const {username, reciver} = req.body;
+    if(req.body.function==='get') {
+        const user = await User.findById(res.locals.token.id)
+        const { name, avatar } = user
+        res.json({username:name, avatar})
+    } else {
+        const {username, reciver} = req.body;
 
-    const user = await User.findOne({name:username})
+        const user = await User.findOne({name:username})
 
-    const messages = user.chats.filter(chat=>
-        chat._id === `${username}${reciver}` || `${reciver}${username}`
-    )
+        const messages = user.chats.filter(chat=>
+            chat._id === `${username}${reciver}` || `${reciver}${username}`
+        )
 
-    res.status(200).send(messages)
+        res.status(200).send(messages)
+    }
+
+    
 })
 
 
