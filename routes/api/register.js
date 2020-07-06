@@ -20,9 +20,9 @@ router.post('/', async (req,res)=>{
 
     const checkError = details => {
         if (details==='"email" must be a valid email') {
-            res.send({msg:'email does not exist',type:'error'});
+            res.json({msg:'email does not exist',type:'error'});
         } else {
-            res.send({msg:details,type:'error'});
+            res.json({msg:details,type:'error'});
         }
     }
 
@@ -30,11 +30,11 @@ router.post('/', async (req,res)=>{
     
     const isUserWithSameName = await User.findOne({name}); 
 
-    if(isUserWithSameName) return res.send({msg:'name already taken',type:'error'});
+    if(isUserWithSameName) return res.json({msg:'name already taken',type:'error'});
 
     const isUserWithSameEmail = await User.findOne({email}); 
 
-    if(isUserWithSameEmail) return res.send({msg:'email already exist',type:'error'});
+    if(isUserWithSameEmail) return res.json({msg:'email already exist',type:'error'});
     
     bcrypt.genSalt(10, function (err, salt) {
         bcrypt.hash(req.body.password, salt, async function (err, hash) {
@@ -47,8 +47,8 @@ router.post('/', async (req,res)=>{
             })
             newUser
             .save()
-            .then(()=>{ res.send( {msg:'registered successfully',type:'success'})} )
-            .catch(()=>{ res.send( {msg:'something went wrong, please try again later',type:'error'})} )
+            .then(()=>{ res.json( {msg:'registered successfully',type:'success'})} )
+            .catch(()=>{ res.json( {msg:'something went wrong, please try again later',type:'error'})} )
         });
     });
         

@@ -44,14 +44,16 @@ register = e => {
         },
         credentials: 'include'
         })
-        .then(res=>{
+        .then(res=>res.json())
+        .then(data=>{
             this.setState({ msg: {
-                type: res.data.type,
-                body: res.data.msg
+                type: data.type,
+                body: data.msg
             }, isLoading:false  
         })
         })
-        .catch(()=>{
+        .catch(e=>{
+            console.log(e)
             this.setState({ msg: {
                 type: 'error',
                 body: 'unknow error, please try again later'
