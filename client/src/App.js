@@ -63,7 +63,7 @@ componentDidMount(){
   credentials: 'include',
   body:JSON.stringify({function:"get"})
   })
-  .then(res => {res.json(); console.log(res.body)})
+  .then(res => res.json())
   .then(data => {
     console.log(data)
       if( !data ) {
