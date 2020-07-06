@@ -61,7 +61,12 @@ componentDidMount(){
   fetch('https://chatapp-luisleopardi.herokuapp.com/home'/*'http://localhost:8000'*/, {
   method: "post",
   credentials: 'include',
-  body:JSON.stringify({function:"get"})
+  body:JSON.stringify({function:"get"}),
+  headers: {
+    'Accept': 'application/json',
+    'Content-Type': 'application/json',
+    'Cache': 'no-cache'
+},
   })
   .then(res => res.json())
   .then(data => {
