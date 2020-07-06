@@ -2,7 +2,7 @@ const jwt = require("jsonwebtoken");
 require('dotenv').config()
 
 const auth = async (req, res, next) => {
-/*
+
   const {token} = req.session;
     
   if(!token) return res.status(400).send(false);
@@ -15,7 +15,7 @@ const auth = async (req, res, next) => {
     next();
 
   });
-*/
+
 };
 
 module.exports = auth;

@@ -21,8 +21,8 @@ app.use(session({
   store: new MongoStore({ mongooseConnection: mongoose.connection }),
   cookie: {
     maxAge: 60 * 60 * 60 * 24,
-    secure: true,
-    httpOnly: true,
+    secure: false,
+    httpOnly: false,
   }
   }))
 
@@ -38,7 +38,7 @@ if(process.env.NODE_ENV === 'production') {
 }
 
 const server = require('http').createServer(app);
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 8000;
 server.listen(port);
 const io = require('socket.io')(server);
 mongoose

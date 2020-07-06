@@ -58,14 +58,14 @@ logout = () => {
 }
 
 componentDidMount(){
-  fetch('https://chatapp-luisleopardi.herokuapp.com/'/*'http://localhost:5000'*/, {
+  fetch('https://chatapp-luisleopardi.herokuapp.com/'/*'http://localhost:8000'*/, {
   method: "GET",
   credentials: 'include'
   })
-  .then(response => response.clone().json())
+  .then(res => {res.json(); console.log(res.body)})
   .then(data => {
     console.log(data)
-      if( data===null ) {
+      if( !data ) {
           this.setState({ data: false, isFinishedLoading:true })
       } else if (data.user === null) {
           this.setState({ data: false, isFinishedLoading:true })

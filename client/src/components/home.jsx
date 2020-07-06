@@ -56,8 +56,6 @@ return (
 </div> 
 )}
 
-
-
 const Dashboard = ({username, online, avatarArray, avatar, selected, setSelected}) => {
 const [reciver, setReciver] = useState(null);
 const [usersSidebarClass, setClass] = useState('usersOnline');
