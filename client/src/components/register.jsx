@@ -44,7 +44,10 @@ register = e => {
         },
         credentials: 'include'
         })
-        .then(res=>res.json())
+        .then(res=>{
+            console.log(res)
+            return res.json()
+        })
         .then(data=>{
             this.setState({ msg: {
                 type: data.type,
