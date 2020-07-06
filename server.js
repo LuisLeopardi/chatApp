@@ -58,7 +58,7 @@ const home = require('./routes/api/home');
 const logout = require('./routes/api/logout');
 const profile = require('./routes/api/profile');
 
-app.use('/', home);
+app.use('/home', home);
 app.use('/register', register);
 app.use('/login', login);
 app.use('/logout', logout);

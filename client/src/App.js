@@ -58,7 +58,7 @@ logout = () => {
 }
 
 componentDidMount(){
-  fetch('https://chatapp-luisleopardi.herokuapp.com/'/*'http://localhost:8000'*/, {
+  fetch('https://chatapp-luisleopardi.herokuapp.com/home'/*'http://localhost:8000'*/, {
   method: "GET",
   credentials: 'include'
   })
