@@ -22,7 +22,7 @@ router.post('/', async (req,res)=>{
         if (details==='"email" must be a valid email') {
             res.json({msg:'email does not exist',type:'error'});
         } else {
-            res.json({msg:name,type:'error'});
+            res.json({msg:req.body,type:'error'});
         }
     }
 
