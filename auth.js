@@ -2,7 +2,7 @@ const jwt = require("jsonwebtoken");
 require('dotenv').config()
 
 const auth = async (req, res, next) => {
-/*
+
   const {token} = req.session;
     
   if(!token) return res.status(404).json({user:null});
@@ -12,10 +12,10 @@ const auth = async (req, res, next) => {
   if (err) return res.status(404).json({user:null});
 
   res.locals.token = decoded;
- */ 
+ 
   next();
 
-  /*});*/
+  });
 
 };
 
