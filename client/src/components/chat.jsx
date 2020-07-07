@@ -14,7 +14,6 @@ const focusView = useRef(null);
 
 useEffect(()=>{
     const { name, room } = queryString.parse(location.search);
-    console.log()
     setRoom(room);
     setName(name);
     setChatRoom(room);

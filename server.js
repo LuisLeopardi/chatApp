@@ -87,6 +87,10 @@ io.on('connection', socket => {
       socket.broadcast.to(room).emit('message', {message, username})
     })
 
+    socket.on('disconected', ({username})=>{
+      io.emit('removeUser', {username})
+    })
+
     socket.on('sendPrivateMessage', async ({message, sender, reciver})=>{
 
       const Sender = await User.findOne({name:sender});

@@ -48,7 +48,7 @@ router.post('/', async (req,res)=>{
             newUser
             .save()
             .then(()=>{ res.json( {msg:'registered successfully',type:'success'})} )
-            .catch(()=>{ res.json( {msg:'something went wrong, please try again later',type:'error'})} )
+            .catch((e)=>{ res.json( {msg:e,type:'error'})} )
         });
     });
         
