@@ -88,7 +88,7 @@ componentDidMount(){
 
               console.log(alredyOnline)
 
-              if (username !== this.state.username || alredyOnline) {
+              if (username !== this.state.username || alredyOnline===false) {
                 this.setState(prevState => ({
                   online: [...prevState.online, {username, room, avatar}]
                 }))
