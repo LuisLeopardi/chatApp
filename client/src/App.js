@@ -91,6 +91,12 @@ componentDidMount(){
                   online: [...prevState.online, {username, room, avatar}]
                 }))
               }
+            });
+
+            socket.on('removeUser', ({username})=>{
+              const filtered = this.state.online.filter(e=> e.username !== username )
+              this.setState({ online: filtered })
+              console.log(filtered)
             })
           }, 1000);
           

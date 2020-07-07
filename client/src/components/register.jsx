@@ -40,17 +40,17 @@ register = e => {
         })
         .then(res=> res.json())
         .then(data=>{
-            this.setState({ msg: {
+            /*this.setState({ msg: {
                 type: data.type,
                 body: data.msg
             }, isLoading:false  
-        })
+        })*/
         console.log(data)
         })
         .catch(e=>{
             this.setState({ msg: {
                 type: 'error',
-                body: 'unknow error, please try again later'
+                body: 'connection error, please try again later'
             }, isLoading:false  
         })
         })
