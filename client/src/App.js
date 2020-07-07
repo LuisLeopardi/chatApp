@@ -82,11 +82,14 @@ componentDidMount(){
             socket.emit('activeUser', {username:data.username, room:this.state.isInRoom, avatar:data.avatar })
             socket.on('online', ({username, room, avatar})=>{
 
-              const alredyOnline = this.state.online.find(e=>username===e.username);
+              const alredyOnline = this.state.online.find((e)=>{
+                console.log(e)
+                return username===e.username
+              });
               
               console.log(alredyOnline)
 
-              if (username !== this.state.username && alredyOnline !== undefined) {
+              if (username !== this.state.username || alredyOnline !== undefined) {
                 this.setState(prevState => ({
                   online: [...prevState.online, {username, room, avatar}]
                 }))
