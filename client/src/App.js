@@ -82,10 +82,8 @@ componentDidMount(){
             socket.emit('activeUser', {username:data.username, room:this.state.isInRoom, avatar:data.avatar })
             socket.on('online', ({username, room, avatar})=>{
 
-              const alredyOnline = async ({username}) => {
-                this.state.online.find(username)
-              }
-
+              const alredyOnline = this.state.online.find(e=>username===e);
+              
               console.log(alredyOnline)
 
               if (username !== this.state.username || alredyOnline===false) {
