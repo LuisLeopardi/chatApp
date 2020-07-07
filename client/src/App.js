@@ -75,13 +75,20 @@ componentDidMount(){
       } else if (data.user === null) {
           this.setState({ data: false, isFinishedLoading:true })
       } else {
-          socket.emit('activeUser', {username:data.username, room:this.state.isInRoom, avatar:data.avatar })
           this.setState({username:data.username, avatar:data.avatar, isFinishedLoading:true})
 
-          setInterval(() => {
-            console.log('fired')
+          setInterval( () => {
+
+            socket.emit('activeUser', {username:data.username, room:this.state.isInRoom, avatar:data.avatar })
             socket.on('online', ({username, room, avatar})=>{
-              if (username !== this.state.username) {
+
+              const alredyOnline = async ({username}) => {
+                this.state.online.find(username)
+              }
+
+              console.log(alredyOnline)
+
+              if (username !== this.state.username || alredyOnline) {
                 this.setState(prevState => ({
                   online: [...prevState.online, {username, room, avatar}]
                 }))
