@@ -326,12 +326,11 @@
 }
 
 .usersOnline {
-  display: flex;
+  display: none;
   background-color: #f1f1f1;
   width: 0%;
   height: 100vh;
   overflow: auto;
-  opacity: 0;
   border: solid #b8b8b8;
   border-width: 0 1px 0 0;
 }
@@ -345,7 +344,10 @@
 }
 
 .deploy {
-  opacity: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
   width: 50%;
   padding: 30px 5px 0 5px;
 }
