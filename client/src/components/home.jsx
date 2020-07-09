@@ -122,7 +122,7 @@ const PrivateChat = ({username, reciver, selected, usersSidebarClass}) => {
     const focusView = useRef(null)
 
     const getMessages = () => {
-        /*fetch('https://chatapp-luisleopardi.herokuapp.com/home', {
+        fetch('https://chatapp-luisleopardi.herokuapp.com/home', {
             method: "post",
             credentials: 'include',
             headers: {
@@ -144,8 +144,7 @@ const PrivateChat = ({username, reciver, selected, usersSidebarClass}) => {
         .catch(()=>{
             setMessages([])
             setLoadingStatus(true)
-        })*/
-        console.log('nah not today')
+        })
     }
 
     useEffect(()=>{

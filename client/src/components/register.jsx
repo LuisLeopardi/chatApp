@@ -40,12 +40,11 @@ register = e => {
         })
         .then(res=> res.json())
         .then(data=>{
-            /*this.setState({ msg: {
+            this.setState({ msg: {
                 type: data.type,
                 body: data.msg
             }, isLoading:false  
-        })*/
-        console.log(data)
+        })
         })
         .catch(e=>{
             this.setState({ msg: {
