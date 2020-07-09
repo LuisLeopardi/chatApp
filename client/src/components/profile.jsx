@@ -58,7 +58,7 @@ const Profile = ({avatar, username, setLocation}) => {
                 <img className='profileAvatar' src={avatar} alt="profileAvatar"/>
                 <div>
                     <p> {username} </p>
-                    <div className={disabledInput?'confirm':'none'}>
+                    <div className={disabledInput?'none':'confirm'}>
                         <input type="text" defaultValue={username} onChange={e=>setUsernameToChange(e.target.value)}/>
                          <b> change </b>  
                          <div className='yesOrNo'>

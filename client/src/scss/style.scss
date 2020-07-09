@@ -112,7 +112,7 @@
             background-color: rgb(174, 200, 255);
         }
     }
-    a {
+    a, p {
         text-align: center;
         color: rgb(37, 37, 37);
         font-size: 80%;
@@ -278,9 +278,7 @@
 .chatRoomItem {
     @include flex-center-center;
     cursor: pointer;
-    width: 90%;
     height: 50px;
-    border-width: 0 0 2px 0;
     margin: 20px 0 20px 0;
     transform: translateX(-10px);
     transition: all 0.1s linear;
@@ -295,6 +293,11 @@
         padding: 10px 10px 10px 40px;
         width: 110px;
         transform: translateX(-3px);
+        transition: 0.3s linear all;
+        &:hover {
+            border: solid rgb(22, 123, 218);
+            border-width: 2px 2px 2px 0;
+        }
     }
     img {
         width:130%;
@@ -370,7 +373,7 @@
 }
 
 .sendMessage {
-    height: 50%;
+    height: 35%;
     cursor: pointer;
     transition: 0.3s linear all;
     &:hover {
@@ -379,9 +382,9 @@
 }
 
 .onlineUsername {
-    color: rgb(29, 29, 29)(36, 33, 33);
+    color: rgb(32, 32, 32);
     font-weight: bold;
-    font-size: 90%;
+    font-size: 80%;
     cursor: default;
 }
 
@@ -472,7 +475,7 @@
     margin: 0 auto 0 auto;
     max-width: 800px;
     width: 100%;
-    padding: 10px 0 0 0;
+    padding: 10px 5px 0 5px;
 }
 
 .chatTitle {
@@ -529,6 +532,7 @@
     padding:10px;
     background-color: #0356fc;
     border-radius:10px;
+    max-width: 40%;
     p {
         color:#fff;
         background-color: inherit;
@@ -668,17 +672,16 @@
     align-items: center;
     justify-content: space-around;
     position: fixed;
-    left: 10vw;
-    width: 80vw;
+    left:0;
+    width: 100vw;
     height: 40vw;
     max-height: 200px;
-    top: 50%;
+    top: 0;
     background-color: #e6e4ff;
     padding: 10px;
-    border-radius: 15px;
-    box-shadow: 0 0 35px 18px rgb(65, 65, 65);
+    box-shadow: 0 0 15px 3px rgb(65, 65, 65);
     animation: up 0.3s linear;
-    z-index: 10000;
+    z-index: 10000000000;
 }
 
 .selectavatar {

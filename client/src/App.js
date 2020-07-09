@@ -136,7 +136,7 @@ return (
 
               <div>
                 <img src={lightBulb}/> 
-                <a href='/' onClick={this.logout}> LOGOUT </a> 
+                <p href='/' onClick={this.logout}> LOGOUT </p> 
               </div>  
             </div>
           </div>
