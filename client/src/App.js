@@ -76,9 +76,10 @@ componentDidMount(){
           this.setState({ isFinishedLoading:true })
       } else {
           this.setState({username:data.username, avatar:data.avatar, isFinishedLoading:true})
-          
+          setInterval( () => {
+
             socket.emit('activeUser', {username:data.username, room:this.state.isInRoom, avatar:data.avatar })
-           
+
             socket.on('online', ({username, room, avatar})=>{
 
               const alredyOnline = this.state.online.find((e)=> username===e.username);
@@ -91,13 +92,12 @@ componentDidMount(){
                 }))
               }
             });
-
-            socket.on('removeUser', ({user})=>{
-              const filtered = this.state.online.filter(e=> e.username !== user )
-              this.setState({ online: filtered })
-            })
-      
+          }, 100);
           
+          socket.on('removeUser', ({user})=>{
+            const filtered = this.state.online.filter(e=> e.username !== user )
+            this.setState({ online: filtered })
+          })
         }
   })
   .catch(e=>{
