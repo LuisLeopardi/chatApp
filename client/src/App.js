@@ -76,7 +76,7 @@ componentDidMount(){
           this.setState({ isFinishedLoading:true })
       } else {
           this.setState({username:data.username, avatar:data.avatar, isFinishedLoading:true})
-          setInterval( () => {
+          
             socket.emit('activeUser', {username:data.username, room:this.state.isInRoom, avatar:data.avatar })
            
             socket.on('online', ({username, room, avatar})=>{
@@ -95,9 +95,8 @@ componentDidMount(){
             socket.on('removeUser', ({user})=>{
               const filtered = this.state.online.filter(e=> e.username !== user )
               this.setState({ online: filtered })
-              console.log(filtered)
             })
-          }, 1000);
+      
           
         }
   })
