@@ -150,7 +150,6 @@ return (
           <img src={group}/>
         </div>
         
- 
         <a className={ !username? 'links logo' : 'none'} href='/'> Chat App </a>  
         <a className={ !username? 'links register' : 'none'} href='/register'> register </a>
         <a className={ !username? 'links login' : 'none'} href='/login'> login </a>

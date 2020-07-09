@@ -57,13 +57,14 @@ const Profile = ({avatar, username, setLocation}) => {
             <div className='profileInfoWrap'>
                 <img className='profileAvatar' src={avatar} alt="profileAvatar"/>
                 <div>
-                    <input className={disabledInput?'usernameInput':'usernameInput editStage'} disabled={disabledInput} defaultValue={username} onChange={e=>setUsernameToChange(e.target.value)}/> 
-                    <div className={disabledInput?'none':'confirmNameChange'}>
+                    <p> {username} </p>
+                    <div className={disabledInput?'confirm':'none'}>
+                        <input type="text" defaultValue={username} onChange={e=>setUsernameToChange(e.target.value)}/>
                          <b> change </b>  
-                        <span>
-                            <p onClick={changeUsername}>yes</p>
-                            <p onClick= {()=> setInput(!disabledInput)}>no</p>  
-                        </span>    
+                         <div className='yesOrNo'>
+                            <p className='yes' onClick={changeUsername}>yes</p>
+                            <p className='no' onClick= {()=> setInput(!disabledInput)}>no</p>  
+                        </div>    
                     </div>        
                 </div>
                 <img className={disabledInput?'changeUsername':'none'} src={edit} alt="edit" onClick= {()=> setInput(!disabledInput)}/>  

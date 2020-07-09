@@ -84,7 +84,7 @@ return (
         {
             online.map(obj=>
                 <div key={obj.username} className={usersSidebarClass === 'usersOnline'? 'userContainer opacity' : 'userContainer '}>
-                    <img src={avatarArray.filter(e=>e===avatar)} alt="userPic" className='userIcon'/>
+                    <img src={avatarArray.filter(e=>e===obj.avatar)} alt="userPic" className='userIcon'/>
                     <div className='userInfoWrap'> 
                         <p className='onlineUsername'> {obj.username} </p>
                         <div>
@@ -182,7 +182,7 @@ return (
                     messages.map((e,i)=>
                         <div 
                             className={e.sender !== username ? 'message' : 'yourMessage'} 
-                            key={Math.random() * 1000}
+                            key={Math.random() * 10000 + e.sender}
                             ref={i===messages.length-1? focusView : null}
                             > 
                             {e.body}
@@ -193,7 +193,7 @@ return (
                 }
 
                 </div>
-                <div className='chatInputs'> 
+                <div className={isDoneLoading?'chatInputs':'none'}> 
                     <input type="text" value={message} onChange={e=>setMessage(e.target.value)}/>
                     <button onClick={sendMessage}> send </button>
                 </div>
