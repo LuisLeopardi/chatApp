@@ -69,8 +69,11 @@ app.use('/profile', profile);
 
 io.on('connection', socket => {
 
+    let user;
+
     socket.on('activeUser', ({username, room, avatar})=>{
       io.emit('online', {username, room, avatar})
+      user = username
     })
 
     socket.on('join', ({ user, room }) => { 
@@ -87,8 +90,8 @@ io.on('connection', socket => {
       socket.broadcast.to(room).emit('message', {message, username})
     })
 
-    socket.on('disconected', ({username})=>{
-      io.emit('removeUser', {username})
+    socket.on('disconnect', ()=>{
+      io.emit('removeUser', {user})
     })
 
     socket.on('sendPrivateMessage', async ({message, sender, reciver})=>{

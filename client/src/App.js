@@ -77,7 +77,6 @@ componentDidMount(){
       } else {
           this.setState({username:data.username, avatar:data.avatar, isFinishedLoading:true})
           setInterval( () => {
-            console.log('e')
             socket.emit('activeUser', {username:data.username, room:this.state.isInRoom, avatar:data.avatar })
            
             socket.on('online', ({username, room, avatar})=>{
@@ -93,8 +92,8 @@ componentDidMount(){
               }
             });
 
-            socket.on('removeUser', ({username})=>{
-              const filtered = this.state.online.filter(e=> e.username !== username )
+            socket.on('removeUser', ({user})=>{
+              const filtered = this.state.online.filter(e=> e.username !== user )
               this.setState({ online: filtered })
               console.log(filtered)
             })
@@ -105,13 +104,6 @@ componentDidMount(){
   .catch(e=>{
     this.setState({ data: false, isFinishedLoading:true })
   })
-}
-
-componentWillUnmount(){
-  const {username} = this.state;
-  if(username){
-    socket.emit('disconected', {username})
-  }
 }
 
 click = () => {
