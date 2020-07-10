@@ -116,7 +116,7 @@ io.on('connection', socket => {
         if (chat._id === `${Sender._id}${Reciver._id}` || `${Reciver._id}${Sender._id}`) {
           isChatForReciver = true
         } else {
-            isChatForReciver = false
+          isChatForReciver = false
         }
       });
 
@@ -132,11 +132,12 @@ io.on('connection', socket => {
 
       } else {
 
-        await User.updateOne({'chats._id': `${Sender._id}${Reciver._id}` || `${Reciver._id}${Sender._id}`}, {  
+        await User.updateOne({'chats._id': { $elemMatch: { $eq: `${Sender._id}${Reciver._id}`, $eq: `${Reciver._id}${Sender._id}`} }}, {  
           $push: {
             'chats.$.messages':{sender, body:message}
         }
       })
+
       }
 
       if (!isChatForReciver) {
@@ -147,11 +148,11 @@ io.on('connection', socket => {
               'messages': { sender, body:message },
             } 
           }
-        });
+        })
 
       } else {
 
-        await User.updateOne({'chats._id': `${Sender._id}${Reciver._id}` || `${Reciver._id}${Sender._id}`}, {  
+        await User.updateOne({'chats._id': { $elemMatch: { $eq: `${Sender._id}${Reciver._id}`, $eq: `${Reciver._id}${Sender._id}`} }}, {  
           $push: {
             'chats.$.messages':{sender, body:message}
         }

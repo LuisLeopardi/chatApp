@@ -414,7 +414,7 @@
 .onlineUsername {
   color: #202020;
   font-weight: bold;
-  font-size: 80%;
+  font-size: 60%;
   cursor: default;
 }
 
@@ -603,6 +603,7 @@
 .privateMessageContainer {
   height: 50vh;
   overflow: auto;
+  padding: 0 3px 0 3px;
 }
 
 .sender {
@@ -635,9 +636,11 @@
   justify-content: space-around;
   align-items: center;
   padding: 40px 5px 5px 5px;
+  width: 80%;
 }
 .profileInfoWrap div {
   width: 100%;
+  text-align: center;
 }
 
 .changeUsername {
@@ -799,6 +802,38 @@
   padding: 10px;
   color: #1f1f1f;
   text-align: center;
+}
+
+@media (min-width: 480px) {
+  .deploy {
+    width: 30%;
+  }
+
+  .smaller {
+    width: 70%;
+  }
+
+  .onlineUsername {
+    font-size: 70%;
+  }
+}
+@media (min-width: 767px) {
+  .deploy {
+    width: 20%;
+  }
+
+  .smaller {
+    width: 80%;
+  }
+
+  .onlineUsername {
+    font-size: 80%;
+  }
+}
+@media (min-width: 1024px) {
+  .onlineUsername {
+    font-size: 100%;
+  }
 }
 
 /*# sourceMappingURL=style.css.map */

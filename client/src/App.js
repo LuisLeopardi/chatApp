@@ -74,12 +74,15 @@ componentDidMount(){
       } else if (data.user === null) {
           this.setState({ isFinishedLoading:true })
       } else {
+          if(location.pathname == "/login" || location.pathname == "/register" ) {
+            window.location='/'
+          }
           this.setState({username:data.username, avatar:data.avatar, isFinishedLoading:true})
           setInterval( () => {
 
             socket.emit('activeUser', {username:data.username, room:this.state.isInRoom, avatar:data.avatar })
 
-            socket.on('online', ({username, room, avatar})=>{
+            socket.on('online', ({username, location, avatar})=>{
 
               const alredyOnline = this.state.online.find((e)=> username===e.username);
 
@@ -87,11 +90,11 @@ componentDidMount(){
 
               if (username !== this.state.username) {
                 this.setState(prevState => ({
-                  online: [...prevState.online, {username, room, avatar}]
+                  online: [...prevState.online, {username, room:location, avatar}]
                 }))
               }
             });
-          }, 100);
+          }, 1000);
           
           socket.on('removeUser', ({user})=>{
             const filtered = this.state.online.filter(e=> e.username !== user )
@@ -100,7 +103,7 @@ componentDidMount(){
         }
   })
   .catch(e=>{
-    this.setState({ data: false, isFinishedLoading:true })
+    this.setState({ isFinishedLoading:true })
   })
 }
 
@@ -135,7 +138,7 @@ return (
 
               <div>
                 <img src={lightBulb}/> 
-                <p href='/' onClick={this.logout}> LOGOUT </p> 
+                <p onClick={this.logout}> LOGOUT </p> 
               </div>  
             </div>
           </div>
