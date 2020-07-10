@@ -156,7 +156,7 @@ return (
       </nav>
       <Switch>
         <Route exact path='/' render={props => 
-          (<Home {...props} setChatRoom={setChatRoom} setLocation={this.setLocation} setSelected={this.setSelected} selected={selected} avatarArray={avatarArray} username={username} avatar={avatar} online={online} />)} />
+          (<Home {...props} setChatRoom={this.setChatRoom} setLocation={this.setLocation} setSelected={this.setSelected} selected={selected} avatarArray={avatarArray} username={username} avatar={avatar} online={online} />)} />
         <Route path='/register' component={Register} />
         <Route path='/login' component={Login} />
         <Route exact path='/chat' render={props => 
