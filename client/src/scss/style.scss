@@ -590,6 +590,7 @@
 .profileInfoWrap {
     @include flex-center-around;
     padding: 40px 5px 5px 5px;
+    width: 80%;
     div {
         width: 100%;
         text-align: center;
@@ -770,12 +771,6 @@
 }
 
 @media (min-width:1024px) {
-    .deploy {
-        width: 10%;
-    }
-    .smaller {
-        width: 90%;
-    }
     .onlineUsername {
         font-size: 100%;
     }

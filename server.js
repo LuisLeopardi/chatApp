@@ -70,10 +70,12 @@ app.use('/profile', profile);
 io.on('connection', socket => {
 
     let user;
+    let location;
 
     socket.on('activeUser', ({username, room, avatar})=>{
-      io.emit('online', {username, room, avatar})
       user = username
+      location = room
+      io.emit('online', {username, location, avatar})
     })
 
     socket.on('join', ({ user, room }) => { 
@@ -103,7 +105,7 @@ io.on('connection', socket => {
       let isChatForReciver;
 
       Sender.chats.forEach(chat=>{
-        if (chat._id === `${sender}${reciver}` || `${reciver}${sender}`) {
+        if (chat._id === `${Sender._id}${Reciver._id}` || `${Reciver._id}${Sender._id}`) {
           isChat = true
         } else {
           isChat = false
@@ -111,7 +113,7 @@ io.on('connection', socket => {
       });
 
       Reciver.chats.forEach(chat=>{
-        if (chat._id === `${sender}${reciver}` || `${reciver}${sender}`) {
+        if (chat._id === `${Sender._id}${Reciver._id}` || `${Reciver._id}${Sender._id}`) {
           isChatForReciver = true
         } else {
             isChatForReciver = false
@@ -122,7 +124,7 @@ io.on('connection', socket => {
         await User.updateOne({name:sender},{
           $push : {
             chats : {
-              '_id': `${sender}${reciver}`,
+              '_id': `${Sender._id}${Reciver._id}`,
               'messages': { sender, body:message },
             } 
           }
@@ -130,7 +132,7 @@ io.on('connection', socket => {
 
       } else {
 
-        await User.updateOne({'chats._id': `${sender}${reciver}`}, {  
+        await User.updateOne({'chats._id': `${Sender._id}${Reciver._id}` || `${Reciver._id}${Sender._id}`}, {  
           $push: {
             'chats.$.messages':{sender, body:message}
         }
@@ -141,7 +143,7 @@ io.on('connection', socket => {
         await User.updateOne({name:reciver},{
           $push : {
             chats :  {
-              '_id': `${sender}${reciver}`,
+              '_id':`${Sender._id}${Reciver._id}`,
               'messages': { sender, body:message },
             } 
           }
@@ -149,7 +151,7 @@ io.on('connection', socket => {
 
       } else {
 
-        await User.updateOne({'chats._id': `${sender}${reciver}`}, {  
+        await User.updateOne({'chats._id': `${Sender._id}${Reciver._id}` || `${Reciver._id}${Sender._id}`}, {  
           $push: {
             'chats.$.messages':{sender, body:message}
         }
