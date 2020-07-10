@@ -19,6 +19,7 @@ class Home extends Component {
 
 componentDidMount(){
     this.props.setLocation(true)
+    this.props.setChatRoom(null)
 }
 
 render() {
@@ -161,7 +162,7 @@ const PrivateChat = ({username, reciver, selected, usersSidebarClass}) => {
 
     const sendMessage = () => {
         setMessages([...messages, {sender:username, body:message}])
-        socket.emit('sendPrivateMessage', {message, sender:username, reciver:username})
+        socket.emit('sendPrivateMessage', {message, sender:username, reciver})
         setMessage('')
         focusView.current.scrollIntoView({  block: 'start' })
     }

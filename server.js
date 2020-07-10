@@ -103,7 +103,7 @@ io.on('connection', socket => {
       let isChatForReciver;
 
       Sender.chats.forEach(chat=>{
-        if (chat._id === `${sender}${reciver}`) {
+        if (chat._id === `${sender}${reciver}` || `${reciver}${sender}`) {
           isChat = true
         } else {
           isChat = false
@@ -111,17 +111,17 @@ io.on('connection', socket => {
       });
 
       Reciver.chats.forEach(chat=>{
-        if (chat._id === `${sender}${reciver}`) {
+        if (chat._id === `${sender}${reciver}` || `${reciver}${sender}`) {
           isChatForReciver = true
         } else {
-          isChatForReciver = false
+            isChatForReciver = false
         }
       });
 
       if (!isChat) {
         await User.updateOne({name:sender},{
           $push : {
-            chats :  {
+            chats : {
               '_id': `${sender}${reciver}`,
               'messages': { sender, body:message },
             } 

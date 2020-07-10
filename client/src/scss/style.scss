@@ -384,7 +384,7 @@
 .onlineUsername {
     color: rgb(32, 32, 32);
     font-weight: bold;
-    font-size: 80%;
+    font-size: 60%;
     cursor: default;
 }
 
@@ -592,6 +592,7 @@
     padding: 40px 5px 5px 5px;
     div {
         width: 100%;
+        text-align: center;
     }
 }
 
@@ -744,3 +745,38 @@
     text-align: center;
 }
 
+@media (min-width:480px) {
+    .deploy {
+        width: 30%;
+    }
+    .smaller {
+        width: 70%;
+    }
+    .onlineUsername {
+        font-size: 70%;
+    }
+}
+
+@media (min-width:767px) {
+    .deploy {
+        width: 20%;
+    }
+    .smaller {
+        width: 80%;
+    }
+    .onlineUsername {
+        font-size: 80%;
+    }
+}
+
+@media (min-width:1024px) {
+    .deploy {
+        width: 10%;
+    }
+    .smaller {
+        width: 90%;
+    }
+    .onlineUsername {
+        font-size: 100%;
+    }
+}

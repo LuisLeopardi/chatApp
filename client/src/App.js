@@ -35,7 +35,6 @@ state = {
 }
 
 setLocation = boolean => {
-
   this.setState({isInDashboard:boolean})
 }
 
@@ -58,7 +57,7 @@ logout = () => {
 }
 
 componentDidMount(){
-  fetch('https://chatapp-luisleopardi.herokuapp.com/home'/*'http://localhost:8000'*/, {
+  fetch('https://chatapp-luisleopardi.herokuapp.com/home', {
   method: "post",
   credentials: 'include',
   body:JSON.stringify({function:"get"}),
@@ -157,7 +156,7 @@ return (
       </nav>
       <Switch>
         <Route exact path='/' render={props => 
-          (<Home {...props} setLocation={this.setLocation} setSelected={this.setSelected} selected={selected} avatarArray={avatarArray} username={username} avatar={avatar} online={online} />)} />
+          (<Home {...props} setChatRoom={setChatRoom} setLocation={this.setLocation} setSelected={this.setSelected} selected={selected} avatarArray={avatarArray} username={username} avatar={avatar} online={online} />)} />
         <Route path='/register' component={Register} />
         <Route path='/login' component={Login} />
         <Route exact path='/chat' render={props => 
