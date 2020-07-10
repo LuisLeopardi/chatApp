@@ -74,7 +74,7 @@ componentDidMount(){
       } else if (data.user === null) {
           this.setState({ isFinishedLoading:true })
       } else {
-          if(location.pathname == "/login" || location.pathname == "/register" ) {
+          if(window.location.pathname == "/login" || window.location.pathname == "/register" ) {
             window.location='/'
           }
           this.setState({username:data.username, avatar:data.avatar, isFinishedLoading:true})
