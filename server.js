@@ -98,6 +98,8 @@ io.on('connection', socket => {
 
     socket.on('sendPrivateMessage', async ({message, sender, reciver})=>{
 
+      socket.emit(`done${reciver}`, {reciver, message})
+
       const Sender = await User.findOne({name:sender});
       const Reciver = await User.findOne({name:reciver});
 
@@ -132,10 +134,12 @@ io.on('connection', socket => {
 
       } else {
 
-        await User.updateOne({name:sender}, {'chats._id':  { $or: [ {$eq:`${Sender._id}${Reciver._id}`}, {$eq: `${Reciver._id}${Sender._id}`}]   }}, {  
-          $push: {
-            'chats.$.messages':{sender, body:message}
-        }
+        await User.updateOne(
+          { name:sender, 'chats._id': {$or: [`${Sender._id}${Reciver._id}`,`${Reciver._id}${Sender._id}`] }}, 
+          {  
+            $push: {
+              'chats.$.messages':{sender, body:message}
+          }
       })
 
       }
@@ -152,14 +156,15 @@ io.on('connection', socket => {
 
       } else {
 
-        await User.updateOne({name:reciver}, {'chats._id':  { $or: [ {$eq:`${Sender._id}${Reciver._id}`}, {$eq: `${Reciver._id}${Sender._id}`}]   }}, {  
-          $push: {
-            'chats.$.messages':{sender, body:message}
-        }
+        await User.updateOne(
+          { name:reciver, 'chats._id': {$or: [`${Sender._id}${Reciver._id}`,`${Reciver._id}${Sender._id}`] }}, 
+          {  
+            $push: {
+              'chats.$.messages':{sender, body:message}
+          }
       })
-      }
 
-      io.emit(`done${reciver}`, {reciver, message})
+      }
 
     })
 
