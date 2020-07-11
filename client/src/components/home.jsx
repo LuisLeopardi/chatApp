@@ -186,8 +186,8 @@ return (
                             className={e.sender !== username ? 'message' : 'yourMessage'} 
                             key={Math.random() * 10000 + e.sender}
                             ref={i===messages.length-1? focusView : null}
-                            > 
-                            {e.body}
+                            >
+                            <p>{e.body}</p> 
                         </div>  
                     )
                     :

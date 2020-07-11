@@ -577,6 +577,7 @@
 .message p, .yourMessage p {
   color: #fff;
   background-color: inherit;
+  word-wrap: break-word;
 }
 
 .yourMessage {
@@ -587,7 +588,6 @@
 .yourMessage p {
   color: #000;
   width: 100%;
-  word-wrap: break-word;
 }
 
 .privateMessage {

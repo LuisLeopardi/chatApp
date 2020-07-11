@@ -536,6 +536,7 @@
     p {
         color:#fff;
         background-color: inherit;
+        word-wrap: break-word;
     }
 }
 
@@ -546,7 +547,6 @@
     p{
         color:#000;
         width:100%;
-        word-wrap: break-word;
     } 
 }
 
