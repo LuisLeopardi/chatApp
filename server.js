@@ -98,7 +98,7 @@ io.on('connection', socket => {
 
     socket.on('sendPrivateMessage', async ({message, sender, reciver})=>{
 
-      socket.emit(`done${reciver}`, {reciver, message})
+      socket.broadcast.emit(`done${reciver}`, {reciver, message})
 
       const Sender = await User.findOne({name:sender});
       const Reciver = await User.findOne({name:reciver});

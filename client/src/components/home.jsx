@@ -165,7 +165,6 @@ const PrivateChat = ({username, reciver, selected, usersSidebarClass}) => {
         socket.emit('sendPrivateMessage', {message, sender:username, reciver})
         setMessage('')
         focusView.current.scrollIntoView({  block: 'start' })
-        console.log(username, reciver)
     }
 
 return (
