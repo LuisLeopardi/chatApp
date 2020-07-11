@@ -151,6 +151,7 @@ const PrivateChat = ({username, reciver, selected, usersSidebarClass}) => {
     useEffect(()=>{
         socket.on(`done${username}`, ({reciver,message})=>{
             setMessages([...messages, {sender:reciver, body:message}])
+            console.log('getting msg')
         })
     })
 
@@ -164,6 +165,7 @@ const PrivateChat = ({username, reciver, selected, usersSidebarClass}) => {
         socket.emit('sendPrivateMessage', {message, sender:username, reciver})
         setMessage('')
         focusView.current.scrollIntoView({  block: 'start' })
+        console.log(username, reciver)
     }
 
 return (

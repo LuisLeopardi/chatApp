@@ -132,7 +132,7 @@ io.on('connection', socket => {
 
       } else {
 
-        await User.updateOne({name:sender, chats: { $elemMatch: { _id: { $or: [ {$eq:`${Sender._id}${Reciver._id}`}, {$eq: `${Reciver._id}${Sender._id}`}]   }}}}, {  
+        await User.updateOne({name:sender, 'chats._id':  { $or: [ {$eq:`${Sender._id}${Reciver._id}`}, {$eq: `${Reciver._id}${Sender._id}`}]   }}, {  
           $push: {
             'chats.$.messages':{sender, body:message}
         }
@@ -152,7 +152,7 @@ io.on('connection', socket => {
 
       } else {
 
-        await User.updateOne({name:reciver, chats: { $elemMatch: { _id: { $or: [ {$eq:`${Sender._id}${Reciver._id}`}, {$eq: `${Reciver._id}${Sender._id}`}]   }}}}, {  
+        await User.updateOne({name:reciver, 'chats._id':  { $or: [ {$eq:`${Sender._id}${Reciver._id}`}, {$eq: `${Reciver._id}${Sender._id}`}]   }}, {  
           $push: {
             'chats.$.messages':{sender, body:message}
         }
@@ -160,7 +160,6 @@ io.on('connection', socket => {
       }
 
       io.emit(`done${reciver}`, {reciver, message})
-      io.emit(`done${sender}`, {sender, message})
 
     })
 
