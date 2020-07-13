@@ -162,7 +162,7 @@ io.on('connection', socket => {
         })
       }
 
-      io.broadcast.emit(`for${reciver}`, {reciver,message,sender})
+      socket.broadcast.emit(`for${reciver}`, {reciver,message,sender})
 
 
     })
