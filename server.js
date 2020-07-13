@@ -154,6 +154,8 @@ io.on('connection', socket => {
         }
       });
 
+      console.log(isChatForReciver)
+
       if(!isChat) {
         await User.updateOne({name:sender},{
           $push : {
@@ -181,6 +183,7 @@ io.on('connection', socket => {
           }
         });
       } else {
+        console.log('trigered')
         await User.updateOne({name:reciver, "chats._id": `${Sender._id}${Reciver._id}` || `${Reciver._id}${Sender._id}` },{
           $push: {
             'chats.$.messages':{sender, body:message}
