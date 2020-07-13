@@ -25,13 +25,12 @@ const UserSchema = new mongoose.Schema ({
       },
       chats: [
         {
-          _id: String,
+          key:String,
           messages:[
             {
               type:Object,
               sender:String,
               body:String,
-              key:String
             }
           ]
         }
