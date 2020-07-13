@@ -111,7 +111,7 @@ io.on('connection', socket => {
         }
       });
 
-      if(!ischat) {
+      if(!isChat) {
         await User.updateOne({name:reciver},{
           $push : {
             chats : {
@@ -144,7 +144,7 @@ io.on('connection', socket => {
         }
       });
 
-      if(!ischat) {
+      if(!isChat) {
         await User.updateOne({name:sender},{
           $push : {
             chats : {
