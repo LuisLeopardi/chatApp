@@ -10,7 +10,7 @@ const path = require('path');
 require('dotenv').config()
 // MIDDLEWARES
 
-app.use(cors({credentials:true, origin:'https://chatapp-luisleopardi.herokuapp.com/'/*'http://localhost:3000'*/}))
+app.use(cors({credentials:true, origin:'https://chatapp-luisleopardi.herokuapp.com/'}))
 app.use(express.json());
 app.use(session({
   name:'chatSession',
@@ -95,7 +95,7 @@ io.on('connection', socket => {
     socket.on('disconnect', ()=>{
       io.emit('removeUser', {user})
     });
-
+/*
     socket.on(`for${user}`, async ({reciver,message,sender})=>{
       console.log(user)
       let isChat;
@@ -129,10 +129,11 @@ io.on('connection', socket => {
       }
 
     })
-
+*/
     socket.on('sendPrivateMessage', async ({message, sender, reciver})=>{
-      console.log(user)
+      
       let isChat;
+      let isChatForReciver;
 
       const Sender = await User.findOne({name:sender});
       const Reciver = await User.findOne({name:reciver})
@@ -142,6 +143,14 @@ io.on('connection', socket => {
           isChat = true
         } else {
           isChat = false
+        }
+      });
+
+      Reciver.chats.forEach(chat=>{
+        if (chat._id === `${Sender._id}${Reciver._id}` || `${Reciver._id}${Sender._id}`) {
+          isChatForReciver = true
+        } else {
+          isChatForReciver = false
         }
       });
 
@@ -156,6 +165,23 @@ io.on('connection', socket => {
         });
       } else {
         await User.updateOne({name:sender, "chats._id": `${Sender._id}${Reciver._id}` || `${Reciver._id}${Sender._id}` },{
+          $push: {
+            'chats.$.messages':{sender, body:message}
+          }
+        })
+      }
+
+      if(!isChatForReciver) {
+        await User.updateOne({name:reciver},{
+          $push : {
+            chats : {
+              '_id': `${Sender._id}${Reciver._id}`,
+              'messages': { sender, body:message },
+            } 
+          }
+        });
+      } else {
+        await User.updateOne({name:reciver, "chats._id": `${Sender._id}${Reciver._id}` || `${Reciver._id}${Sender._id}` },{
           $push: {
             'chats.$.messages':{sender, body:message}
           }

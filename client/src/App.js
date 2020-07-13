@@ -51,9 +51,6 @@ logout = () => {
     method: "GET",
     credentials: 'include'
   })
-  .then(()=>{
-    window.location.reload()
-  })
 }
 
 componentDidMount(){
