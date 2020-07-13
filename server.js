@@ -94,17 +94,47 @@ io.on('connection', socket => {
 
     socket.on('disconnect', ()=>{
       io.emit('removeUser', {user})
+    });
+
+    socket.on(`for${user}`, async ({reciver,message,sender})=>{
+
+      let isChat;
+
+      const Reciver = await User.findOne({name:reciver})
+      const Sender = await User.findOne({name:sender});
+
+      Reciver.chats.forEach(chat=>{
+        if (chat._id === `${Sender._id}${Reciver._id}` || `${Reciver._id}${Sender._id}`) {
+          isChat = true
+        } else {
+          isChat = false
+        }
+      });
+
+      if(!ischat) {
+        await User.updateOne({name:reciver},{
+          $push : {
+            chats : {
+              '_id': `${Sender._id}${Reciver._id}`,
+              'messages': { sender, body:message },
+            } 
+          }
+        });
+      } else {
+        await User.updateOne({name:reciver, "chats._id": {$or:[`${Sender._id}${Reciver._id}`,`${Reciver._id}${Sender._id}`]} },{
+          $push: {
+            'chats.$.messages':{sender, body:message}
+          }
+        })
+      }
+
     })
 
     socket.on('sendPrivateMessage', async ({message, sender, reciver})=>{
 
-      socket.broadcast.emit(`done${reciver}`, {reciver, message})
+      let isChat;
 
       const Sender = await User.findOne({name:sender});
-      const Reciver = await User.findOne({name:reciver});
-
-      let isChat;
-      let isChatForReciver;
 
       Sender.chats.forEach(chat=>{
         if (chat._id === `${Sender._id}${Reciver._id}` || `${Reciver._id}${Sender._id}`) {
@@ -114,15 +144,7 @@ io.on('connection', socket => {
         }
       });
 
-      Reciver.chats.forEach(chat=>{
-        if (chat._id === `${Sender._id}${Reciver._id}` || `${Reciver._id}${Sender._id}`) {
-          isChatForReciver = true
-        } else {
-          isChatForReciver = false
-        }
-      });
-
-      if (!isChat) {
+      if(!ischat) {
         await User.updateOne({name:sender},{
           $push : {
             chats : {
@@ -131,43 +153,18 @@ io.on('connection', socket => {
             } 
           }
         });
-
       } else {
-
-        await User.updateOne(
-          { name:sender, 'chats._id': {$or: [`${Sender._id}${Reciver._id}`,`${Reciver._id}${Sender._id}`] }}, 
-          {  
-            $push: {
-              'chats.$.messages':{sender, body:message}
-          }
-      })
-
-      }
-
-      if (!isChatForReciver) {
-        await User.updateOne({name:reciver},{
-          $push : {
-            chats :  {
-              '_id':`${Sender._id}${Reciver._id}`,
-              'messages': { sender, body:message },
-            } 
+        await User.updateOne({name:sender, "chats._id": {$or:[`${Sender._id}${Reciver._id}`,`${Reciver._id}${Sender._id}`]} },{
+          $push: {
+            'chats.$.messages':{sender, body:message}
           }
         })
-
-      } else {
-
-        await User.updateOne(
-          { name:reciver, 'chats._id': {$or: [`${Sender._id}${Reciver._id}`,`${Reciver._id}${Sender._id}`] }}, 
-          {  
-            $push: {
-              'chats.$.messages':{sender, body:message}
-          }
-      })
-
       }
 
-    })
+      io.broadcast.emit(`for${reciver}`, {reciver,message,sender})
 
+
+    })
 });
 
 
