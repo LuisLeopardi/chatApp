@@ -131,8 +131,6 @@ io.on('connection', socket => {
     })
 */
     socket.on('sendPrivateMessage', async ({message, sender, reciver})=>{
-
-      const ObjectId = require('mongoose').Types.ObjectId;
       
       let isChat;
       let isChatForReciver;
@@ -144,7 +142,7 @@ io.on('connection', socket => {
       const ReciverAndSender = `${Sender._id}${Reciver._id}`
 
       Sender.chats.forEach(chat=>{
-        if (chat._id === `${Sender._id}${Reciver._id}` || `${Reciver._id}${Sender._id}`) {
+        if (chat.key === SenderAndReciver || ReciverAndSender) {
           isChat = true
         } else {
           isChat = false
@@ -152,7 +150,7 @@ io.on('connection', socket => {
       });
 
       Reciver.chats.forEach(chat=>{
-        if (chat._id === `${Sender._id}${Reciver._id}` || `${Reciver._id}${Sender._id}`) {
+        if (chat.key === SenderAndReciver || ReciverAndSender) {
           isChatForReciver = true
         } else {
           isChatForReciver = false
