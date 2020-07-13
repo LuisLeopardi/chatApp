@@ -97,7 +97,7 @@ io.on('connection', socket => {
     });
 
     socket.on(`for${user}`, async ({reciver,message,sender})=>{
-
+      console.log(user)
       let isChat;
 
       const Reciver = await User.findOne({name:reciver})
@@ -131,7 +131,7 @@ io.on('connection', socket => {
     })
 
     socket.on('sendPrivateMessage', async ({message, sender, reciver})=>{
-
+      console.log(user)
       let isChat;
 
       const Sender = await User.findOne({name:sender});

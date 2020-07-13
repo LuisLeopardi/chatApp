@@ -149,8 +149,8 @@ const PrivateChat = ({username, reciver, selected, usersSidebarClass}) => {
     }
 
     useEffect(()=>{
-        socket.on(`for${username}`, ({reciver,message})=>{
-            setMessages([...messages, {sender:reciver, body:message}])
+        socket.on(`for${username}`, ({reciver,message,sender})=>{
+            setMessages([...messages, {sender, body:message}])
         })
     })
 
