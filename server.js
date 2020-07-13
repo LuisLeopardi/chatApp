@@ -5,14 +5,11 @@ const cors = require('cors');
 const session = require('express-session');
 const User = require('./models/users');
 const MongoStore = require ('connect-mongo')(session);
-const sessionSecret = require('./config/keys').sessionSecret;
 const path = require('path');
 require('dotenv').config()
 // MIDDLEWARES
 
-app.use(cors({credentials:true, origin:'https://chatapp-luisleopardi.herokuapp.com/'}))
-app.use(express.json());
-app.use(session({
+const sessionMiddleware = (session({
   name:'chatSession',
   secret: process.env.SESSION_SECRET,
   resave: false,
@@ -21,11 +18,14 @@ app.use(session({
   store: new MongoStore({ mongooseConnection: mongoose.connection }),
   cookie: {
     maxAge: 60 * 60 * 60 * 24,
-    secure: false,
-    httpOnly: false,
+    secure: true,
+    httpOnly: true,
   }
-  }))
+}));
 
+app.use(sessionMiddleware);
+app.use(express.json());
+app.use(cors({credentials:true, origin:'https://chatapp-luisleopardi.herokuapp.com/'}))
 
 // CONECTIONS
 
@@ -41,6 +41,9 @@ const server = require('http').createServer(app);
 const port = process.env.PORT || 5000;
 server.listen(port);
 const io = require('socket.io')(server);
+io.use(function(socket,next){
+  sessionMiddleware(socket.request, socket.request.res || {}, next);
+})
 mongoose
 .connect(
     process.env.MONGO_URI,{
@@ -69,139 +72,109 @@ app.use('/profile', profile);
 
 io.on('connection', socket => {
 
-    let user;
-    let location;
+  let user;
+  let location;
 
-    socket.on('activeUser', ({username, room, avatar})=>{
-      user = username
-      location = room
-      io.emit('online', {username, location, avatar})
-    })
+  socket.on('activeUser', async ({username, room, avatar})=>{
+    console.log(socket.request.session)
+    user = username
+    location = room
+    io.emit('online', {username, location, avatar})
+  })
 
-    socket.on('join', ({ user, room }) => { 
-      socket.join(room)
-      socket.broadcast.to(room).emit('message', { username:'admin', message: `${user} has joined` })
-    });
+  socket.on('join', ({ user, room }) => { 
+    socket.join(room)
+    socket.broadcast.to(room).emit('message', { username:'admin', message: `${user} has joined` })
+  });
 
-    socket.on('exit', ({room, username}) => {
-      socket.broadcast.to(room).emit('message', {username:'admin', message:`${username} has left` }) 
-      socket.leave(room)
-    });
+  socket.on('exit', ({room, username}) => {
+    socket.broadcast.to(room).emit('message', {username:'admin', message:`${username} has left` }) 
+    socket.leave(room)
+  });
 
-    socket.on('sendMessage', ({message, username, room}) => {
-      socket.broadcast.to(room).emit('message', {message, username})
-    })
+  socket.on('sendMessage', ({message, username, room}) => {
+    socket.broadcast.to(room).emit('message', {message, username})
+  })
 
-    socket.on('disconnect', ()=>{
-      io.emit('removeUser', {user})
-    });
-/*
-    socket.on(`for${user}`, async ({reciver,message,sender})=>{
-      console.log(user)
-      let isChat;
+  socket.on('disconnect', ()=>{
+    io.emit('removeUser', {user})
+  });
 
-      const Reciver = await User.findOne({name:reciver})
-      const Sender = await User.findOne({name:sender});
+  socket.on('privateMsg', async ({reciver,message,sender})=>{
 
-      Reciver.chats.forEach(chat=>{
-        if (chat._id === `${Sender._id}${Reciver._id}` || `${Reciver._id}${Sender._id}`) {
-          isChat = true
-        } else {
-          isChat = false
-        }
-      });
+    let isChat;
 
-      if(!isChat) {
-        await User.updateOne({name:reciver},{
-          $push : {
-            chats : {
-              '_id': `${Sender._id}${Reciver._id}`,
-              'messages': { sender, body:message },
-            } 
-          }
-        });
+    const Reciver = await User.findOne({name:reciver})
+    const Sender = await User.findOne({name:sender});
+
+    Reciver.chats.forEach(chat=>{
+      if (chat.key === `${Sender._id}${Reciver._id}` || `${Reciver._id}${Sender._id}`) {
+        isChat = true
       } else {
-        await User.updateOne({name:reciver, "chats._id": `${Sender._id}${Reciver._id}` || `${Reciver._id}${Sender._id}` },{
-          $push: {
-            'chats.$.messages':{sender, body:message}
-          }
-        })
+        isChat = false
       }
+    });
 
+    if(!isChat) {
+      await User.updateOne({name:reciver},{
+        $push : {
+          chats : {
+            'key': `${Sender._id}${Reciver._id}`,
+            'messages': { sender, body:message },
+          } 
+          }
+      });
+    } else {
+      await User.updateOne({name:reciver, "chats.key": `${Sender._id}${Reciver._id}` || `${Reciver._id}${Sender._id}` },{
+        $push: {
+          'chats.$.messages':{sender, body:message}
+        }
+      })
+    }
     })
-*/
-    socket.on('sendPrivateMessage', async ({message, sender, reciver})=>{
+
+  socket.on('sendPrivateMessage', async ({message, sender, reciver})=>{
       
-      let isChat;
-      let isChatForReciver;
+    let isChat;
 
-      const Sender = await User.findOne({name:sender});
-      const Reciver = await User.findOne({name:reciver})
+    const Sender = await User.findOne({name:sender});
+    const Reciver = await User.findOne({name:reciver})
 
-      const SenderAndReciver = `${Sender._id}${Reciver._id}`
-      const ReciverAndSender = `${Sender._id}${Reciver._id}`
+    const SenderAndReciver = `${Sender._id}${Reciver._id}`
+    const ReciverAndSender = `${Sender._id}${Reciver._id}`
 
-      Sender.chats.forEach(chat=>{
-        if (chat.key === SenderAndReciver || ReciverAndSender) {
-          isChat = true
-        } else {
-          isChat = false
+    Sender.chats.forEach(chat=>{
+      if (chat.key === SenderAndReciver || ReciverAndSender) {
+        isChat = true
+      } else {
+        isChat = false
+      }
+    });
+
+    if(!isChat) {
+      await User.updateOne({name:sender},{
+        $push : {
+          chats : {
+            'key': `${Sender._id}${Reciver._id}`,
+            'messages': { sender, body:message },
+          } 
         }
       });
-
-      Reciver.chats.forEach(chat=>{
-        if (chat.key === SenderAndReciver || ReciverAndSender) {
-          isChatForReciver = true
-        } else {
-          isChatForReciver = false
+    } else {
+      await User.updateOne({$and:[
+        {name:sender},
+        {$or:[{'chats.key': SenderAndReciver },{'chats.key': ReciverAndSender }]}
+      ]
+    },{
+        $push: {
+          'chats.$.messages':{sender, body:message}
         }
-      });
+      })
+    }
 
-      if(!isChat) {
-        await User.updateOne({name:sender},{
-          $push : {
-            chats : {
-              'key': `${Sender._id}${Reciver._id}`,
-              'messages': { sender, body:message },
-            } 
-          }
-        });
-      } else {
-        await User.updateOne({$and:[
-          {name:sender},
-          {$or:[{'chats.key': SenderAndReciver },{'chats.key': ReciverAndSender }]}
-        ]
-      },{
-          $push: {
-            'chats.$.messages':{sender, body:message}
-          }
-        })
-      }
+    const reciverSession = await session.findOne({username:reciver})
 
-      if(!isChatForReciver) {
-        await User.updateOne({name:reciver},{
-          $push : {
-            chats : {
-              'key': `${Sender._id}${Reciver._id}`,
-              'messages': { sender, body:message },
-            } 
-          }
-        });
-      } else {
-        console.log('sd')
-        await User.updateOne({ $and: [
-          {name:reciver},
-          {$or:[{'chats.key': SenderAndReciver },{'chats.key': ReciverAndSender }]}
-        ]
-         },{
-          $push: {
-            'chats.$.messages':{sender, body:message}
-          }
-        })
-      }
-
-      socket.broadcast.emit(`for${reciver}`, {reciver,message,sender})
-
+    socket.broadcast.to(reciverSession.socketID).emit(`privateMsg`, {reciver,message,sender})
 
     })
 });

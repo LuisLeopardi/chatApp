@@ -20,9 +20,11 @@ router.post('/', (req,res)=>{
 
     if (isUser) {
       if(req.session.token){
-        req.session.token = token
+        req.session.token = token;
+        req.session.username = user.name;
       }else{
-        req.session.token = token
+        req.session.token = token;
+        req.session.username = user.name;
       }
       res.send(req.session)
     } else {

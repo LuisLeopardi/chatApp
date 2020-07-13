@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 const joi = require('@hapi/joi');
-const jwt = require('jsonwebtoken');
 
 const UserSchema = new mongoose.Schema ({
     name: {
@@ -51,4 +50,4 @@ function validateUser (user) {
 
 exports.validateUser = validateUser
 
-module.exports = User = mongoose.model('users', UserSchema);
+module.exports = Session = mongoose.model('users', UserSchema);
