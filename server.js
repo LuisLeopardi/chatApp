@@ -135,6 +135,7 @@ io.on('connection', socket => {
       let isChat;
 
       const Sender = await User.findOne({name:sender});
+      const Reciver = await User.findOne({name:reciver})
 
       Sender.chats.forEach(chat=>{
         if (chat._id === `${Sender._id}${Reciver._id}` || `${Reciver._id}${Sender._id}`) {
