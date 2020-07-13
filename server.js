@@ -131,12 +131,17 @@ io.on('connection', socket => {
     })
 */
     socket.on('sendPrivateMessage', async ({message, sender, reciver})=>{
+
+      const ObjectId = require('mongoose').Types.ObjectId;
       
       let isChat;
       let isChatForReciver;
 
       const Sender = await User.findOne({name:sender});
       const Reciver = await User.findOne({name:reciver})
+
+      const SenderAndReciver = new ObjectId(`${Sender._id}${Reciver._id}`)
+      const ReciverAndSender = new ObjectId(`${Sender._id}${Reciver._id}`)
 
       Sender.chats.forEach(chat=>{
         if (chat._id === `${Sender._id}${Reciver._id}` || `${Reciver._id}${Sender._id}`) {
@@ -166,7 +171,7 @@ io.on('connection', socket => {
       } else {
         await User.updateOne({$and:[
           {name:sender},
-          {$or:[{'chats._id': `${Sender._id}${Reciver._id}`},{'chats._id': `${Reciver._id}${Sender._id}`}]}
+          {$or:[{'chats._id': SenderAndReciver},{'chats._id': ReciverAndSender}]}
         ]
       },{
           $push: {
@@ -187,7 +192,7 @@ io.on('connection', socket => {
       } else {
         await User.updateOne({ $and: [
           {name:reciver},
-          {$or:[{'chats._id': `${Sender._id}${Reciver._id}`},{'chats._id': `${Reciver._id}${Sender._id}`}]}
+          {$or:[{'chats._id': SenderAndReciver},{'chats._id': ReciverAndSender}]}
         ]
          },{
           $push: {
