@@ -163,7 +163,7 @@ io.on('connection', socket => {
         await User.updateOne({name:sender},{
           $push : {
             chats : {
-              '_id': `${Sender._id}${Reciver._id}`,
+              'key': `${Sender._id}${Reciver._id}`,
               'messages': { sender, body:message },
             } 
           }
@@ -171,7 +171,7 @@ io.on('connection', socket => {
       } else {
         await User.updateOne({$and:[
           {name:sender},
-          {$or:[{'chats._id': ObjectId(SenderAndReciver) },{'chats._id': ObjectId(ReciverAndSender) }]}
+          {$or:[{'chats.key': SenderAndReciver },{'chats.key': ReciverAndSender }]}
         ]
       },{
           $push: {
@@ -184,7 +184,7 @@ io.on('connection', socket => {
         await User.updateOne({name:reciver},{
           $push : {
             chats : {
-              '_id': `${Sender._id}${Reciver._id}`,
+              'key': `${Sender._id}${Reciver._id}`,
               'messages': { sender, body:message },
             } 
           }
@@ -192,7 +192,7 @@ io.on('connection', socket => {
       } else {
         await User.updateOne({ $and: [
           {name:reciver},
-          {$or:[{'chats._id': ObjectId(SenderAndReciver) },{'chats._id': ObjectId(ReciverAndSender) }]}
+          {$or:[{'chats.key': SenderAndReciver },{'chats.key': ReciverAndSender }]}
         ]
          },{
           $push: {
