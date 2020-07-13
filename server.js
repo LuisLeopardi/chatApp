@@ -140,8 +140,8 @@ io.on('connection', socket => {
       const Sender = await User.findOne({name:sender});
       const Reciver = await User.findOne({name:reciver})
 
-      const SenderAndReciver = new ObjectId(`${Sender._id}${Reciver._id}`)
-      const ReciverAndSender = new ObjectId(`${Sender._id}${Reciver._id}`)
+      const SenderAndReciver = `${Sender._id}${Reciver._id}`
+      const ReciverAndSender = `${Sender._id}${Reciver._id}`
 
       Sender.chats.forEach(chat=>{
         if (chat._id === `${Sender._id}${Reciver._id}` || `${Reciver._id}${Sender._id}`) {
@@ -171,7 +171,7 @@ io.on('connection', socket => {
       } else {
         await User.updateOne({$and:[
           {name:sender},
-          {$or:[{'chats._id': SenderAndReciver},{'chats._id': ReciverAndSender}]}
+          {$or:[{'chats._id': ObjectId(SenderAndReciver) },{'chats._id': ObjectId(ReciverAndSender) }]}
         ]
       },{
           $push: {
@@ -192,7 +192,7 @@ io.on('connection', socket => {
       } else {
         await User.updateOne({ $and: [
           {name:reciver},
-          {$or:[{'chats._id': SenderAndReciver},{'chats._id': ReciverAndSender}]}
+          {$or:[{'chats._id': ObjectId(SenderAndReciver) },{'chats._id': ObjectId(ReciverAndSender) }]}
         ]
          },{
           $push: {
