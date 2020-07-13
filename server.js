@@ -188,6 +188,7 @@ io.on('connection', socket => {
           }
         });
       } else {
+        console.log('sd')
         await User.updateOne({ $and: [
           {name:reciver},
           {$or:[{'chats.key': SenderAndReciver },{'chats.key': ReciverAndSender }]}
