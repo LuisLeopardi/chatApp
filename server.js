@@ -72,13 +72,11 @@ app.use('/profile', profile);
 
 io.on('connection', socket => {
 
-  let user;
+  const user = socket.request.session.username;
   let location;
 
   socket.on('activeUser', async ({username, room, avatar})=>{
-    console.log(socket.request.session)
-    user = username
-    location = room
+    console.log(socket.request.session.username)
     io.emit('online', {username, location, avatar})
   })
 
@@ -100,7 +98,9 @@ io.on('connection', socket => {
     io.emit('removeUser', {user})
   });
 
-  socket.on('privateMsg', async ({reciver,message,sender})=>{
+  socket.on(`privateMsg${user}`, async ({reciver,message,sender})=>{
+
+    console.log('yesss')
 
     let isChat;
 
@@ -161,20 +161,14 @@ io.on('connection', socket => {
         }
       });
     } else {
-      await User.updateOne({$and:[
-        {name:sender},
-        {$or:[{'chats.key': SenderAndReciver },{'chats.key': ReciverAndSender }]}
-      ]
-    },{
+      await User.updateOne({name:reciver, "chats.key": SenderAndReciver || ReciverAndSender },{
         $push: {
           'chats.$.messages':{sender, body:message}
         }
       })
     }
 
-    const reciverSession = await session.findOne({username:reciver})
-
-    socket.broadcast.to(reciverSession.socketID).emit(`privateMsg`, {reciver,message,sender})
+    socket.broadcast.emit(`privateMsg${reciver}`, {reciver,message,sender})
 
     })
 });
