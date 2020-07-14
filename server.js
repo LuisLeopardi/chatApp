@@ -76,7 +76,6 @@ io.on('connection', socket => {
   let location;
 
   socket.on('activeUser', async ({username, room, avatar})=>{
-    console.log(socket.request.session.username)
     io.emit('online', {username, location, avatar})
   })
 
@@ -99,8 +98,6 @@ io.on('connection', socket => {
   });
 
   socket.on(`privateMsg${user}`, async ({reciver,message,sender})=>{
-
-    console.log('yesss')
 
     let isChat;
 
@@ -134,6 +131,8 @@ io.on('connection', socket => {
     })
 
   socket.on('sendPrivateMessage', async ({message, sender, reciver})=>{
+
+    console.log(user)
       
     let isChat;
 
