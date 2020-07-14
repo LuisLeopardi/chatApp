@@ -97,7 +97,9 @@ io.on('connection', socket => {
     io.emit('removeUser', {user})
   });
 
-  socket.on(`privateMsg${user}`, async ({reciver,message,sender})=>{
+  socket.on('saveMsg', async ({reciver,message,sender})=>{
+
+    console.log('sdad')
 
     let isChat;
 
@@ -131,8 +133,6 @@ io.on('connection', socket => {
     })
 
   socket.on('sendPrivateMessage', async ({message, sender, reciver})=>{
-
-    console.log(user)
       
     let isChat;
 

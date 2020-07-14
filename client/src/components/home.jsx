@@ -150,7 +150,8 @@ const PrivateChat = ({username, reciver, selected, usersSidebarClass}) => {
 
     useEffect(()=>{
         socket.on(`privateMsg${username}`, ({reciver,message,sender})=>{
-            setMessages([...messages, {sender, body:message}])
+            setMessages([...messages, {sender, body:message}]);
+            socket.emit('saveMsg',{reciver,message,sender})
         })
     })
 
