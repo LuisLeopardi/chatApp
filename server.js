@@ -97,7 +97,7 @@ io.on('connection', socket => {
     io.emit('removeUser', {user})
   });
 
-  socket.on('saveMsg', async ({reciver,message,sender})=>{
+  socket.on(`saveMsg${user}`, async ({reciver,message,sender})=>{
 
     console.log('sdad')
 
@@ -137,10 +137,10 @@ io.on('connection', socket => {
     let isChat;
 
     const Sender = await User.findOne({name:sender});
-    const Reciver = await User.findOne({name:reciver})
+    const Reciver = await User.findOne({name:reciver});
 
-    const SenderAndReciver = `${Sender._id}${Reciver._id}`
-    const ReciverAndSender = `${Sender._id}${Reciver._id}`
+    const SenderAndReciver = `${Sender._id}${Reciver._id}`;
+    const ReciverAndSender = `${Reciver._id}${Sender._id}`;
 
     Sender.chats.forEach(chat=>{
       if (chat.key === SenderAndReciver || ReciverAndSender) {
@@ -165,9 +165,9 @@ io.on('connection', socket => {
           'chats.$.messages':{sender, body:message}
         }
       })
-    }
+    };
 
-    socket.broadcast.emit(`privateMsg${reciver}`, {reciver,message,sender})
+    socket.broadcast.emit(`privateMsg${reciver}`, {reciver,message,sender});
 
     })
 });
