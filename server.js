@@ -3,13 +3,12 @@ const app = express();
 const mongoose = require('mongoose');
 const cors = require('cors');
 const session = require('express-session');
-const User = require('./models/users');
 const MongoStore = require ('connect-mongo')(session);
 const path = require('path');
 require('dotenv').config()
 // MIDDLEWARES
 
-const sessionMiddleware = (session({
+session({
   name:'chatSession',
   secret: process.env.SESSION_SECRET,
   resave: false,
@@ -21,7 +20,7 @@ const sessionMiddleware = (session({
     secure: true,
     httpOnly: true,
   }
-}));
+});
 
 app.use(sessionMiddleware);
 app.use(express.json());
@@ -41,9 +40,6 @@ const server = require('http').createServer(app);
 const port = process.env.PORT || 5000;
 server.listen(port);
 const io = require('socket.io')(server);
-io.use(function(socket,next){
-  sessionMiddleware(socket.request, socket.request.res || {}, next);
-})
 mongoose
 .connect(
     process.env.MONGO_URI,{
@@ -72,7 +68,6 @@ app.use('/profile', profile);
 
 io.on('connection', socket => {
 
-  const user = socket.request.session.username;
   let location;
 
   socket.on('activeUser', async ({username, room, avatar})=>{
@@ -89,7 +84,7 @@ io.on('connection', socket => {
     socket.leave(room)
   });
 
-  socket.on('sendPrivateMessage', async ({message, sender, reciver})=>{
+  socket.on('sendPrivateMessage', ({message, sender, reciver})=>{
     io.emit(`privateMsg${reciver}`, {reciver,message,sender});
   })
 });
