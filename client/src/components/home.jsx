@@ -147,7 +147,7 @@ return (
                             className={e.sender !== username ? 'message' : 'yourMessage'} 
                             key={Math.random() * 10000 + e.sender}
                             >
-                            <p>{e.body}</p> 
+                            <p>{e.messages.text}</p> 
                         </div>  
                     )
                 }
