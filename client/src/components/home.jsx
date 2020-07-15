@@ -144,8 +144,7 @@ return (
                 <b> {reciver} </b>
                 <div className='privateMessageContainer'>
                 {
-                    messages[0].messages?
-                    messages[0].messages.map(e=>
+                    messages.map(e=>
                         <div 
                             className={e.messages.sender !== username ? 'message' : 'yourMessage'} 
                             key={Math.random() * 10000 + e.sender}
@@ -153,8 +152,7 @@ return (
                             <p>{e.messages.text}</p> 
                         </div>  
                     )
-                    :
-                    <div></div>
+
                 }
                 </div>
                 <div className='chatInputs'> 
