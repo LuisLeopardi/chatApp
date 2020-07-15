@@ -153,6 +153,8 @@ return (
                             <p>{e.messages.text}</p> 
                         </div>  
                     )
+                    :
+                    <div></div>
                 }
                 </div>
                 <div className='chatInputs'> 
