@@ -160,7 +160,7 @@ return (
                     )
                 }
                 </div>
-                <div className={isDoneLoading?'chatInputs':'none'}> 
+                <div className='chatInputs'> 
                     <input type="text" value={message} onChange={e=>setMessage(e.target.value)}/>
                     <button onClick={sendMessage}> send </button>
                 </div>
