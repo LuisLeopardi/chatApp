@@ -68,10 +68,8 @@ app.use('/profile', profile);
 
 io.on('connection', socket => {
 
-  let location;
-
-  socket.on('activeUser', async ({username, room, avatar})=>{
-    io.emit('online', {username, location, avatar})
+  socket.on('activeUser', ({username, room, avatar, id})=>{
+    io.emit('online', {username, room, avatar, id})
   })
 
   socket.on('join', ({ user, room }) => { 
@@ -84,8 +82,8 @@ io.on('connection', socket => {
     socket.leave(room)
   });
 
-  socket.on('sendPrivateMessage', ({message, sender, reciver})=>{
-    io.emit(`privateMsg${reciver}`, {reciver,message,sender});
+  socket.on('sendPrivateMessage', ({message, sender, reciver, reciverID})=>{
+    io.to(reciverID).emit('privateMsg', {reciver,message,sender});
   })
 });
 

@@ -61,6 +61,7 @@ return (
 
 const Dashboard = ({username, online, avatarArray, selected, setSelected, messages, setMessages}) => {
 const [reciver, setReciver] = useState(null);
+const [reciverID, setID] = useState(null)
 const [usersSidebarClass, setClass] = useState('usersOnline');
 const [divStyle, setStyle] = useState({ display: 'flex', opacity:'1' })
 
@@ -95,7 +96,7 @@ return (
                             <p className='userLocation'> {obj.room === null ? 'lobby' : obj.room} </p>
                         </div>
                     </div>
-                    <img onClick={()=>{setReciver(obj.username); setSelected(chat)}} className='sendMessage' src={sendMessage} alt="sendMessage"/>
+                    <img onClick={()=>{setReciver(obj.username); setID(obj.id); setSelected(chat)}} className='sendMessage' src={sendMessage} alt="sendMessage"/>
                 </div>
             )
         }
@@ -122,7 +123,7 @@ const PrivateChat = ({username, reciver, usersSidebarClass, setMessages, message
     const focusView = useRef(null)
 
     useEffect(()=>{
-        socket.on(`privateMsg${username}`, ({reciver,message,sender})=>{
+        socket.on('privateMsg', ({reciver,message,sender})=>{
             setMessages({to:reciver,sender,text:message});
         })
     })
