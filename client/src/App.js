@@ -113,8 +113,8 @@ componentDidMount(){
           this.setState({username:data.username, avatar:data.avatar, isFinishedLoading:true})
           setInterval( () => {
 
-            socket.emit('activeUser', {username:data.username, room:this.state.isInRoom, avatar:data.avatar, id:io.socket.id })
-            console.log(io.socket.id)
+            socket.emit('activeUser', {username:data.username, room:this.state.isInRoom, avatar:data.avatar})
+            console.log(io)
 
             socket.on('online', ({username, location, avatar, id})=>{
 
