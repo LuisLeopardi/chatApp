@@ -131,7 +131,6 @@ const PrivateChat = ({username, reciver, usersSidebarClass, setMessages, message
         setMessages({to:reciver,sender:username,text:message})
         socket.emit('sendPrivateMessage', {message, sender:username, reciver})
         setMessage('')
-        //focusView.current.scrollIntoView({  block: 'start' })
     }
 
 return (
@@ -147,7 +146,6 @@ return (
                         <div 
                             className={e.sender !== username ? 'message' : 'yourMessage'} 
                             key={Math.random() * 10000 + e.sender}
-                            ref={i===messages.length-1? focusView : null}
                             >
                             <p>{e.body}</p> 
                         </div>  
