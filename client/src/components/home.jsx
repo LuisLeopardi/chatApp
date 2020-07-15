@@ -128,9 +128,10 @@ const PrivateChat = ({username, reciver, usersSidebarClass, setMessages, message
     })
 
     const sendMessage = () => {
-        setMessages({to:reciver,sender:username,text:message})
+        setMessages({reciver,sender:username,text:message})
         socket.emit('sendPrivateMessage', {message, sender:username, reciver})
-        setMessage('')
+        setMessage('');
+        console.log(messages)
     }
 
 return (
@@ -142,7 +143,7 @@ return (
                 <b> {reciver} </b>
                 <div className='privateMessageContainer'>
                 {
-                    messages.map((e,i)=>
+                    messages.map(e=>
                         <div 
                             className={e.sender !== username ? 'message' : 'yourMessage'} 
                             key={Math.random() * 10000 + e.sender}
