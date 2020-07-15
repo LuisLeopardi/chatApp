@@ -22,7 +22,6 @@ session({
   }
 });
 
-app.use(sessionMiddleware);
 app.use(express.json());
 app.use(cors({credentials:true, origin:'https://chatapp-luisleopardi.herokuapp.com/'}))
 
