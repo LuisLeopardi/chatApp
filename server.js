@@ -90,8 +90,8 @@ io.on('connection', socket => {
   });
 
   socket.on('sendPrivateMessage', async ({message, sender, reciver})=>{
-    socket.broadcast.emit(`privateMsg${reciver}`, {reciver,message,sender});
-    })
+    io.emit(`privateMsg${reciver}`, {reciver,message,sender});
+  })
 });
 
 
