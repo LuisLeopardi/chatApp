@@ -38,6 +38,7 @@ state = {
 setMessages = ({to, sender, text}) => {
   let messagesArray = [...this.state.messages]
   const chatIndex = this.state.messages.findIndex(e=>e===to)
+  console.log(this.state.messages)
   if(chatIndex >= 0) {
 
     messagesArray[chatIndex] = {
@@ -54,8 +55,6 @@ setMessages = ({to, sender, text}) => {
     this.setState({
       messages:messagesArray
     });
-    console.log(this.state.messages)
-
   } else {
     const newChat = {
       to,
