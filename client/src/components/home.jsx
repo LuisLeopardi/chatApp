@@ -131,7 +131,6 @@ const PrivateChat = ({username, reciver, selected, usersSidebarClass}) => {
 
     useEffect(()=>{
         setLoadingStatus(false)
-        getMessages()
     },[selected])
 
     const sendMessage = () => {
