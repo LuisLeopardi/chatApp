@@ -3,12 +3,13 @@ const app = express();
 const mongoose = require('mongoose');
 const cors = require('cors');
 const session = require('express-session');
+const User = require('./models/users');
 const MongoStore = require ('connect-mongo')(session);
 const path = require('path');
 require('dotenv').config()
 // MIDDLEWARES
 
-session({
+const sessionMiddleware = (session({
   name:'chatSession',
   secret: process.env.SESSION_SECRET,
   resave: false,
@@ -20,8 +21,9 @@ session({
     secure: true,
     httpOnly: true,
   }
-});
+}));
 
+app.use(sessionMiddleware);
 app.use(express.json());
 app.use(cors({credentials:true, origin:'https://chatapp-luisleopardi.herokuapp.com/'}))
 
@@ -39,6 +41,9 @@ const server = require('http').createServer(app);
 const port = process.env.PORT || 5000;
 server.listen(port);
 const io = require('socket.io')(server);
+io.use(function(socket,next){
+  sessionMiddleware(socket.request, socket.request.res || {}, next);
+})
 mongoose
 .connect(
     process.env.MONGO_URI,{
@@ -67,6 +72,7 @@ app.use('/profile', profile);
 
 io.on('connection', socket => {
 
+  const user = socket.request.session.username;
   let location;
 
   socket.on('activeUser', async ({username, room, avatar})=>{
