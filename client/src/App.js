@@ -32,6 +32,43 @@ state = {
   selected: group,
   optionStyle: {display:'none'},
   isInDashboard: true,
+  messages:[],
+}
+
+setMessages = ({to, sender, text}) => {
+  let messagesArray = [...this.state.messages]
+  const chatIndex = this.state.messages.findIndex(e=>e===to)
+  if(chatIndex >= 0) {
+
+    messagesArray[chatIndex] = {
+      ...messagesArray[chatIndex],
+      messages:[
+        ...messagesArray[chatIndex].messages,
+        {
+          sender,
+          text
+        }
+      ]
+    }
+
+    this.setState({
+      messages:messagesArray
+    });
+    console.log(this.state.messages)
+
+  } else {
+    const newChat = {
+      to,
+      messages:[{
+        sender,
+        text
+      }]
+    }
+
+    this.setState(prevState=>({
+      messages:[...prevState.messages, newChat]
+    }))
+  }
 }
 
 setLocation = boolean => {
@@ -114,7 +151,7 @@ click = () => {
 
 render(){
 const avatarArray = [defaultpic, pic1, pic2, pic3, pic4, pic5, pic6, pic7];
-const {username, avatar, online, isFinishedLoading, selected, optionStyle, isInDashboard} = this.state;
+const {username, avatar, online, isFinishedLoading, selected, optionStyle, isInDashboard, messages} = this.state;
 return (
 
   isFinishedLoading ?
@@ -156,7 +193,18 @@ return (
       </nav>
       <Switch>
         <Route exact path='/' render={props => 
-          (<Home {...props} setChatRoom={this.setChatRoom} setLocation={this.setLocation} setSelected={this.setSelected} selected={selected} avatarArray={avatarArray} username={username} avatar={avatar} online={online} />)} />
+          (<Home {...props}
+            setMessages={this.setMessages} 
+            setChatRoom={this.setChatRoom} 
+            setLocation={this.setLocation} 
+            setSelected={this.setSelected} 
+            selected={selected} 
+            avatarArray={avatarArray} 
+            username={username} 
+            avatar={avatar} 
+            online={online}
+            messages={messages} 
+          />)} />
         <Route path='/register' component={Register} />
         <Route path='/login' component={Login} />
         <Route exact path='/chat' render={props => 

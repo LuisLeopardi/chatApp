@@ -24,7 +24,7 @@ componentDidMount(){
 
 render() {
 
-const {avatarArray, username, avatar, online, selected, setSelected} = this.props;
+const {avatarArray, username, avatar, online, selected, setSelected, messages, setMessages} = this.props;
 
 return (
     <main>{
@@ -38,6 +38,8 @@ return (
             username={username} 
             online={online} 
             avatarArray={avatarArray}
+            messages={messages}
+            setMessages={setMessages}
         />
         :
         <LoginForStartChatting/>
@@ -57,7 +59,7 @@ return (
 </div> 
 )}
 
-const Dashboard = ({username, online, avatarArray, avatar, selected, setSelected}) => {
+const Dashboard = ({username, online, avatarArray, selected, setSelected, messages, setMessages}) => {
 const [reciver, setReciver] = useState(null);
 const [usersSidebarClass, setClass] = useState('usersOnline');
 const [divStyle, setStyle] = useState({ display: 'flex', opacity:'1' })
@@ -103,7 +105,7 @@ return (
         selected === group ?
         <PublicChat username={username} usersSidebarClass={usersSidebarClass} setClass={setClass}/>
         :
-        <PrivateChat usersSidebarClass={usersSidebarClass} selected={selected} reciver={reciver} username={username}/>
+        <PrivateChat setMessages={setMessages} messages={messages} usersSidebarClass={usersSidebarClass} selected={selected} reciver={reciver} username={username}/>
     }
 
     <div style={divStyle} className='seeWhosOnline' onClick={showUsers}> 
@@ -114,27 +116,19 @@ return (
 
 </div> 
 )}
+const PrivateChat = ({username, reciver, usersSidebarClass, setMessages, messages}) => {
 
-const PrivateChat = ({username, reciver, selected, usersSidebarClass}) => {
-
-    const [ isDoneLoading, setLoadingStatus] = useState(false)
     const [ message, setMessage ] = useState('');
-    const [ messages, setMessages ] = useState([]);
     const focusView = useRef(null)
 
     useEffect(()=>{
         socket.on(`privateMsg${username}`, ({reciver,message,sender})=>{
-            setMessages([...messages, {sender, body:message}]);
-            socket.emit(`saveMsg${username}`,{reciver,message,sender})
+            setMessages({to:reciver,sender,text:message});
         })
     })
 
-    useEffect(()=>{
-        setLoadingStatus(false)
-    },[selected])
-
     const sendMessage = () => {
-        setMessages([...messages, {sender:username, body:message}])
+        setMessages({to:reciver,sender:username,text:message})
         socket.emit('sendPrivateMessage', {message, sender:username, reciver})
         setMessage('')
         focusView.current.scrollIntoView({  block: 'start' })
