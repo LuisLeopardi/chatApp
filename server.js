@@ -89,86 +89,8 @@ io.on('connection', socket => {
     socket.leave(room)
   });
 
-  socket.on('sendMessage', ({message, username, room}) => {
-    socket.broadcast.to(room).emit('message', {message, username})
-  })
-
-  socket.on('disconnect', ()=>{
-    io.emit('removeUser', {user})
-  });
-
-  socket.on(`saveMsg${user}`, async ({reciver,message,sender})=>{
-
-    console.log('sdad')
-
-    let isChat;
-
-    const Reciver = await User.findOne({name:reciver})
-    const Sender = await User.findOne({name:sender});
-
-    Reciver.chats.forEach(chat=>{
-      if (chat.key === `${Sender._id}${Reciver._id}` || `${Reciver._id}${Sender._id}`) {
-        isChat = true
-      } else {
-        isChat = false
-      }
-    });
-
-    if(!isChat) {
-      await User.updateOne({name:reciver},{
-        $push : {
-          chats : {
-            'key': `${Sender._id}${Reciver._id}`,
-            'messages': { sender, body:message },
-          } 
-          }
-      });
-    } else {
-      await User.updateOne({name:reciver, "chats.key": `${Sender._id}${Reciver._id}` || `${Reciver._id}${Sender._id}` },{
-        $push: {
-          'chats.$.messages':{sender, body:message}
-        }
-      })
-    }
-    })
-
   socket.on('sendPrivateMessage', async ({message, sender, reciver})=>{
-      
-    let isChat;
-
-    const Sender = await User.findOne({name:sender});
-    const Reciver = await User.findOne({name:reciver});
-
-    const SenderAndReciver = `${Sender._id}${Reciver._id}`;
-    const ReciverAndSender = `${Reciver._id}${Sender._id}`;
-
-    Sender.chats.forEach(chat=>{
-      if (chat.key === SenderAndReciver || ReciverAndSender) {
-        isChat = true
-      } else {
-        isChat = false
-      }
-    });
-
-    if(!isChat) {
-      await User.updateOne({name:sender},{
-        $push : {
-          chats : {
-            'key': `${Sender._id}${Reciver._id}`,
-            'messages': { sender, body:message },
-          } 
-        }
-      });
-    } else {
-      await User.updateOne({name:reciver, "chats.key": SenderAndReciver || ReciverAndSender },{
-        $push: {
-          'chats.$.messages':{sender, body:message}
-        }
-      })
-    };
-
     socket.broadcast.emit(`privateMsg${reciver}`, {reciver,message,sender});
-
     })
 });
 

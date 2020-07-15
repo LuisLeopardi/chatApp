@@ -122,32 +122,6 @@ const PrivateChat = ({username, reciver, selected, usersSidebarClass}) => {
     const [ messages, setMessages ] = useState([]);
     const focusView = useRef(null)
 
-    const getMessages = () => {
-        fetch('https://chatapp-luisleopardi.herokuapp.com/home', {
-            method: "post",
-            credentials: 'include',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({username, reciver, function:'getMessages'})
-        })
-        .then(res=>res.json())
-        .then(data=>{
-            if(!data) {
-                setMessages([])
-            } else {
-                setMessages(data[0].messages)
-            }
-            setLoadingStatus(true)
-        })
-        .then(()=> focusView.current.scrollIntoView({  block: 'start' }))
-        .catch(()=>{
-            setMessages([])
-            setLoadingStatus(true)
-        })
-    }
-
     useEffect(()=>{
         socket.on(`privateMsg${username}`, ({reciver,message,sender})=>{
             setMessages([...messages, {sender, body:message}]);
@@ -171,15 +145,11 @@ return (
     <div className={usersSidebarClass==='usersOnline'? 'dashboard' : 'dashboard smaller'}>
 
         {
-
             reciver?
-
             <div className='privateMessage'> 
                 <b> {reciver} </b>
                 <div className='privateMessageContainer'>
                 {
-                    isDoneLoading?
-
                     messages.map((e,i)=>
                         <div 
                             className={e.sender !== username ? 'message' : 'yourMessage'} 
@@ -189,10 +159,7 @@ return (
                             <p>{e.body}</p> 
                         </div>  
                     )
-                    :
-                    <div className='wait'></div>
                 }
-
                 </div>
                 <div className={isDoneLoading?'chatInputs':'none'}> 
                     <input type="text" value={message} onChange={e=>setMessage(e.target.value)}/>
