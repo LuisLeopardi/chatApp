@@ -45,7 +45,6 @@ const sendMessage = (e) => {
 
 useEffect(()=>{
     if(messages.length > 0){
-        console.log('f')
         focusView.current.scrollIntoView({ block: 'start' })
     }
 },[messages])

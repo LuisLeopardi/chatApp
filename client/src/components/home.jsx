@@ -123,7 +123,7 @@ const PrivateChat = ({username, reciver, usersSidebarClass, setMessages, message
     const focusView = useRef(null)
 
     useEffect(()=>{
-        socket.on('privateMsg', ({reciver,message,sender})=>{
+        socket.on('reciveMsg', ({reciver,message,sender})=>{
             console.log('recived')
             setMessages({to:reciver,sender,text:message});
         })

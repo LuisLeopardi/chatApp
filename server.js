@@ -86,11 +86,8 @@ io.on('connection', socket => {
     socket.leave(room)
   });
 
-
-
   socket.on('privateMsg', ({reciver, message, sender, reciverID})=>{
-    io.to(reciverID).emit('privateMsg', {reciver,message,sender});
-    console.log(reciverID)
+    socket.to(reciverID).emit('reciveMsg', {reciver,message,sender});
   })
 });
 
