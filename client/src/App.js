@@ -35,7 +35,7 @@ state = {
   messages:[],
 }
 
-setMessages = ({reciver, sender, text}) => {
+setMessages = ({to, sender, text}) => {
   console.log(this.state)
   let messagesArray = [...this.state.messages]
   const chatIndex = this.state.messages.findIndex(e=>e.id===`${reciver}${sender}`||`${sender}${reciver}`)
