@@ -74,7 +74,7 @@ io.on('connection', socket => {
 
   socket.on('join', ({ user, room }) => { 
     socket.join(room)
-    socket.broadcast.to(room).emit('message', { username:'admin', message: `${user} has joined` })
+    socket.to(room).emit('message', { username:'admin', message: `${user} has joined` })
   });
 
   socket.on('exit', ({room, username}) => {
@@ -82,7 +82,7 @@ io.on('connection', socket => {
     socket.leave(room)
   });
 
-  socket.on('sendPrivateMessage', ({message, sender, reciver, reciverID})=>{
+  socket.on('privateMsg', ({reciver, message, sender, reciverID})=>{
     io.to(reciverID).emit('privateMsg', {reciver,message,sender});
     console.log(reciverID)
   })
