@@ -38,7 +38,7 @@ const sendMessage = (e) => {
     e.preventDefault();
     if(message) {
         setMessages([...messages, {message, username}])
-        socket.emit(`sendMessage`, {message, username, room})
+        socket.emit('sendMessage', {message, username, room})
         setMessage('')
     }
 }
