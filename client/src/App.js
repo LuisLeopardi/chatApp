@@ -40,9 +40,9 @@ setMessages = ({reciver, sender, text}) => {
   const chatIndex = this.state.messages.findIndex(e=>e.id===`${reciver}${sender}`||`${sender}${reciver}`)
   if(chatIndex >= 0) {
     const newArr = this.state.messages[chatIndex] = {
-      ...id,
+      ...this.state.messages[chatIndex].id,
       messages:[
-        ...messages,
+        ...this.state.messages[chatIndex].messages,
         {
           sender,
           text
