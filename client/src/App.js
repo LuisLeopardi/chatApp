@@ -52,7 +52,7 @@ setMessages = ({reciver, sender, text}) => {
     }
 
     this.setState({
-      messages:{...this.state.messages, newArr}
+      messages: newArr
     });
 
   } else {
