@@ -70,6 +70,7 @@ io.on('connection', socket => {
 
   socket.on('activeUser', ({username, room, avatar, id})=>{
     io.emit('online', {username, room, avatar, id})
+    socket.join(username)
   })
 
   socket.on('join', ({ user, room }) => { 
@@ -87,7 +88,7 @@ io.on('connection', socket => {
   });
 
   socket.on('privateMsg', ({reciver, message, sender, reciverID})=>{
-    socket.to(reciverID).emit('reciveMsg', {reciver,message,sender});
+    io.to(reciver).emit('reciveMsg', {reciver,message,sender});
   })
 });
 
