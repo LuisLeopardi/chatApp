@@ -126,13 +126,14 @@ const PrivateChat = ({username, reciver, usersSidebarClass, setMessages, message
         socket.on('reciveMsg', ({reciver,message,sender})=>{
             console.log('recived')
             setMessages({to:reciver,sender,text:message});
+            console.log(messages)
         })
     })
 
     const sendMessage = () => {
         socket.emit('privateMsg', {reciver, message, sender:username, reciverID})
         setMessage('');
-        console.log(messages[0].messages)
+       // console.log(messages[0].messages)
     }
 
 return (
@@ -144,6 +145,8 @@ return (
                 <b> {reciver} </b>
                 <div className='privateMessageContainer'>
                 {
+                <div></div>
+                /*
                     messages[0] && messages[0].messages.length > 0 ?
                     messages[0].messages.map(e=>
                         <div 
@@ -156,7 +159,7 @@ return (
                     :
                     null
 
-                }
+                    */}
                 </div>
                 <div className='chatInputs'> 
                     <input type="text" value={message} onChange={e=>setMessage(e.target.value)}/>
