@@ -68,8 +68,10 @@ app.use('/profile', profile);
 
 io.on('connection', socket => {
 
-  socket.on('activeUser', ({username, room, avatar, id})=>{
-    io.emit('online', {username, room, avatar, id})
+  socket.join(socket.id)
+
+  socket.on('activeUser', ({username, room, avatar})=>{
+    io.emit('online', {username, room, avatar, id: socket.id})
   })
 
   socket.on('join', ({ user, room }) => { 
@@ -77,20 +79,21 @@ io.on('connection', socket => {
     socket.to(room).emit('message', { username:'admin', message: `${user} has joined` })
   });
 
-  socket.on('sendMessage',({message, username, room})=>{
+  socket.on('sendMessage', ({message, username, room})=>{
     socket.to(room).emit('message', { username, message })
   })
 
   socket.on('exit', ({room, username}) => {
-    socket.to(room).emit('message', {username:'admin', message:`${username} has left` }) 
+    socket.to(room).emit('message', { username:'admin', message:`${username} has left` }) 
     socket.leave(room)
   });
 
   socket.on('privateMsg', async ({reciver, message, sender, reciverID})=>{
     await socket.join(reciverID);
-    io.emit('reciveMsg', {reciver,message,sender});
-    console.log({reciver, message, sender, reciverID})
+    io.to(reciverID).emit('reciveMsg', {reciver,message,sender});
+    console.log({reciver, message, sender, reciverID});
   })
+
 });
 
 

@@ -36,12 +36,13 @@ state = {
 }
 
 setMessages = ({reciver, sender, text}) => {
-  let messagesArray = [...this.state.messages]
+  //let messagesArray = [...this.state.messages]
   const chatIndex = this.state.messages.findIndex(e=>e.id===`${reciver}${sender}`||`${sender}${reciver}`)
   if(chatIndex >= 0) {
-    messagesArray[chatIndex] = {
+    const newArr = this.state.messages[chatIndex] = {
+      ...id,
       messages:[
-        messagesArray[chatIndex].messages,
+        ...messages,
         {
           sender,
           text
@@ -50,7 +51,7 @@ setMessages = ({reciver, sender, text}) => {
     }
 
     this.setState({
-      messages:messagesArray
+      messages:newArr
     });
 
   } else {
@@ -111,7 +112,7 @@ componentDidMount(){
           this.setState({username:data.username, avatar:data.avatar, isFinishedLoading:true})
           setInterval( () => {
     
-            socket.emit('activeUser', {username:data.username, room:this.state.isInRoom, avatar:data.avatar, id:socket.id })
+            socket.emit('activeUser', {username:data.username, room:this.state.isInRoom, avatar:data.avatar})
 
             socket.on('online', ({username, location, avatar, id})=>{
 
