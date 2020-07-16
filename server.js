@@ -69,7 +69,7 @@ app.use('/profile', profile);
 io.on('connection', socket => {
 
   socket.on('activeUser', ({username, room, avatar, id})=>{
-    socket.join(id)
+    socket.join(username)
     io.emit('online', {username, room, avatar, id})
   })
 
@@ -87,8 +87,8 @@ io.on('connection', socket => {
   });
 
   socket.on('privateMsg', ({reciver, message, sender, reciverID})=>{
-    socket.join(reciverID);
-    io.to(reciverID).emit('reciveMsg', {reciver,message,sender});
+    socket.join(sender);
+    socket.to(sender).emit('reciveMsg', {reciver,message,sender});
     console.log({reciver, message, sender, reciverID})
   })
 });
