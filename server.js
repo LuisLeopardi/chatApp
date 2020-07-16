@@ -69,6 +69,7 @@ app.use('/profile', profile);
 io.on('connection', socket => {
 
   socket.on('activeUser', ({username, room, avatar, id})=>{
+    socket.join(id)
     io.emit('online', {username, room, avatar, id})
   })
 
