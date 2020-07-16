@@ -145,7 +145,7 @@ return (
                 <b> {reciver} </b>
                 <div className='privateMessageContainer'>
                 {
-                    messages[0].messages.length > 0 ?
+                    messages[0] && messages[0].messages.length > 0 ?
                     messages.map(e=>
                         <div 
                             className={e.sender !== username ? 'message' : 'yourMessage'} 
