@@ -83,7 +83,7 @@ setChatRoom = room => {
 
 logout = () => {
   fetch('https://chatapp-luisleopardi.herokuapp.com/logout', {
-    method: "GET",
+    method: "post",
     credentials: 'include'
   })
 }
@@ -111,7 +111,7 @@ componentDidMount(){
           }
           this.setState({username:data.username, avatar:data.avatar, isFinishedLoading:true})
           setInterval( () => {
-
+            console.log(socket)
             socket.emit('activeUser', {username:data.username, room:this.state.isInRoom, avatar:data.avatar, id:socket.id })
 
             socket.on('online', ({username, location, avatar, id})=>{
