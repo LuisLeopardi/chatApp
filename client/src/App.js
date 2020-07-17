@@ -112,19 +112,24 @@ componentDidMount(){
           }
           this.setState({username:data.username, avatar:data.avatar, isFinishedLoading:true})
           setInterval( () => {
-    
+
             socket.emit('activeUser', {username:data.username, room:this.state.isInRoom, avatar:data.avatar, id:socket.id })
 
             socket.on('online', ({username, room, avatar, id})=>{
-
+              //console.log(room, 'room')
               const alredyOnline = this.state.online.find(e=> username===e.username);
-
+              
               if (alredyOnline) return;
+
+              const indexOfUser = this.state.online.findIndex(e=>e===username)
+              console.log(indexOfUser, 'indexOfUser')
 
               if(username===data.username) return;
               
-              const roomChanged = this.state.online.findIndex(e=> e.room !==  room)
-              
+              const roomChanged = this.state.online[indexOfUser].room === room
+
+              console.log(roomChanged, 'roomChanged')
+
               const updateRoom = () =>{ 
                 console.log(room, 'update room')
                 this.setState(prevState => ({
