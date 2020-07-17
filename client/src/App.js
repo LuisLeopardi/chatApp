@@ -128,6 +128,10 @@ componentDidMount(){
               }
             });
           }, 1000);
+
+          socket.on(`reciveMsg${username}`, ({reciver,message,sender})=>{
+            this.setMessages({to:reciver,sender,text:message});
+          })
           
           socket.on('removeUser', ({user})=>{
             const filtered = this.state.online.filter(e=> e.username !== user )
