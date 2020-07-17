@@ -141,7 +141,7 @@ componentDidMount(){
                 } 
               }
 
-              if (indexOfUser) shouldUpdateRoom();
+              if (indexOfUser >= 0 ) shouldUpdateRoom();
 
               this.setState(prevState => ({
                 online: [...prevState.online, {username, room, avatar, id}]
