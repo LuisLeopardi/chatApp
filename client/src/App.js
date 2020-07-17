@@ -117,11 +117,11 @@ componentDidMount(){
 
             socket.on('online', ({username, room, avatar, id})=>{
            
-              const alredyOnline = this.state.online.find(e=>username===e.username);
+              const alredyOnline = this.state.online.find(e=>{username===e.username});
               
               if (alredyOnline) return;
 
-              const indexOfUser = this.state.online.findIndex(e=>e.username===username)
+              const indexOfUser = this.state.online.findIndex(e=>{e.username===username})
               console.log(indexOfUser, 'indexOfUser')
 
               if(username===data.username) return;
