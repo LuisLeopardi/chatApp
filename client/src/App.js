@@ -43,7 +43,7 @@ setMessages = ({to, sender, text}) => {
     messagesArray[chatIndex] = {
       id: messagesArray[chatIndex].id,
       messages:[
-        messagesArray[chatIndex].messages,
+        ...messagesArray[chatIndex].messages,
         {
           sender,
           text
