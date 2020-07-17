@@ -123,10 +123,10 @@ const PrivateChat = ({username, reciver, usersSidebarClass, setMessages, message
     const focusView = useRef(null)
 
     useEffect(()=>{
-        socket.on('reciveMsg', ({reciver,message,sender})=>{
+        socket.on(`reciveMsg${username}`, ({reciver,message,sender})=>{
             console.log('recived')
-            //setMessages({to:reciver,sender,text:message});
-            //console.log(messages)
+            setMessages({to:reciver,sender,text:message});
+            console.log(messages)
         })
     })
 
@@ -146,8 +146,7 @@ return (
                 <b> {reciver} </b>
                 <div className='privateMessageContainer'>
                 {
-                <div></div>
-                /*
+                
                     messages[0] && messages[0].messages.length > 0 ?
                     messages[0].messages.map(e=>
                         <div 
@@ -160,7 +159,7 @@ return (
                     :
                     null
 
-                    */}
+                    }
                 </div>
                 <div className='chatInputs'> 
                     <input type="text" value={message} onChange={e=>setMessage(e.target.value)}/>

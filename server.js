@@ -86,10 +86,8 @@ io.on('connection', socket => {
     socket.leave(room)
   });
 
-  socket.on('privateMsg', async ({reciver, message, sender, reciverID})=>{
-    await socket.join(reciverID);
-    io.to(reciverID).emit('reciveMsg', {reciver,message,sender});
-    console.log({reciver, message, sender, reciverID});
+  socket.on('privateMsg', ({reciver, message, sender, reciverID})=>{
+    socket.broadcast.emit(`reciveMsg$reciver${reciver}`, {reciver,message,sender});
   })
 
 });
