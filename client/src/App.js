@@ -32,7 +32,8 @@ state = {
   selected: group,
   optionStyle: {display:'none'},
   isInDashboard: true,
-  messages:[]
+  messages:[],
+  newMessage:[]
 }
 
 setMessages = ({to, sender, text}) => {
@@ -114,15 +115,27 @@ componentDidMount(){
     
             socket.emit('activeUser', {username:data.username, room:this.state.isInRoom, avatar:data.avatar, id:socket.id })
 
-            socket.on('online', ({username, location, avatar, id})=>{
+            socket.on('online', ({username, room, avatar, id})=>{
 
-              const alredyOnline = this.state.online.find((e)=> username===e.username);
+              const alredyOnline = this.state.online.find(e=> username===e.username);
 
               if (alredyOnline) return;
+              
+              const roomChanged = this.state.online.findIndex(e=> e.room !==  room)
+
+              const updateRoom = this.setState(prevState => ({
+                online: [...prevState.online, this.state.online[roomChanged] = {
+                  ...this.state.online[roomChanged],
+                  room
+                }]
+              }))
+
+              if (roomChanged >= 0) return updateRoom();
 
               if (username !== this.state.username) {
+                
                 this.setState(prevState => ({
-                  online: [...prevState.online, {username, room:location, avatar, id}]
+                  online: [...prevState.online, {username, room, avatar, id}]
                 }))
               }
             });
@@ -130,6 +143,14 @@ componentDidMount(){
 
           socket.on(`reciveMsg${socket.id}`, ({reciver,message,sender})=>{
             this.setMessages({to:reciver,sender,text:message});
+            if(sender !== username) {
+              this.setState(prevState=> ({
+              ...prevState.newMessage,
+              sender
+            }))
+            }
+            console.log(this.state)
+
           })
           
           socket.on('removeUser', ({user})=>{
@@ -153,7 +174,7 @@ click = () => {
 
 render(){
 const avatarArray = [defaultpic, pic1, pic2, pic3, pic4, pic5, pic6, pic7];
-const {username, avatar, online, isFinishedLoading, selected, optionStyle, isInDashboard, messages} = this.state;
+const {username, avatar, online, isFinishedLoading, selected, optionStyle, isInDashboard, messages, newMessage} = this.state;
 return (
 
   isFinishedLoading ?
@@ -206,7 +227,8 @@ return (
             avatar={avatar} 
             online={online}
             messages={messages}
-            id={socket.id} 
+            id={socket.id}
+            newMessage={newMessage} 
           />)} />
         <Route path='/register' component={Register} />
         <Route path='/login' component={Login} />

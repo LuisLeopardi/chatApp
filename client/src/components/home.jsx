@@ -24,7 +24,7 @@ componentDidMount(){
 
 render() {
 
-const {avatarArray, username, avatar, online, selected, setSelected, messages, setMessages, id} = this.props;
+const {newMessage, avatarArray, username, avatar, online, selected, setSelected, messages, setMessages} = this.props;
 
 return (
     <main>{
@@ -40,7 +40,6 @@ return (
             avatarArray={avatarArray}
             messages={messages}
             setMessages={setMessages}
-            id={id}
         />
         :
         <LoginForStartChatting/>
@@ -60,7 +59,7 @@ return (
 </div> 
 )}
 
-const Dashboard = ({username, online, avatarArray, selected, setSelected, messages, setMessages, id}) => {
+const Dashboard = ({username, online, avatarArray, selected, setSelected, messages, setMessages, newMessage}) => {
 const [reciver, setReciver] = useState(null);
 const [reciverID, setID] = useState(null)
 const [usersSidebarClass, setClass] = useState('usersOnline');
@@ -108,10 +107,10 @@ return (
         selected === group ?
         <PublicChat username={username} usersSidebarClass={usersSidebarClass} setClass={setClass}/>
         :
-        <PrivateChat id={id} setFocus={setFocus} reciverID={reciverID} setMessages={setMessages} messages={messages} usersSidebarClass={usersSidebarClass} selected={selected} reciver={reciver} username={username}/>
+        <PrivateChat setFocus={setFocus} reciverID={reciverID} setMessages={setMessages} messages={messages} usersSidebarClass={usersSidebarClass} selected={selected} reciver={reciver} username={username}/>
     }
 
-    <div style={focus?null:divStyle} className={focus?'none':'seeWhosOnline'} onClick={showUsers}> 
+    <div style={focus?null:divStyle} className={focus?'none': newMessage? '' : 'seeWhosOnline'} onClick={showUsers}> 
         <span> {online.length} </span>
         <p>online</p> 
         <img src={arrow} alt="arrow"/> 
@@ -119,13 +118,14 @@ return (
 
 </div> 
 )}
-const PrivateChat = ({username, reciver, usersSidebarClass, setMessages, messages, reciverID, setFocus, id}) => {
+const PrivateChat = ({username, reciver, usersSidebarClass, setMessages, messages, reciverID, setFocus}) => {
 
     const [ message, setMessage ] = useState('');
     const focusView = useRef(null)
 
     const sendMessage = () => {
-        socket.emit('privateMsg', {reciver, message, sender:username, reciverID})
+        if(message==='')return;
+        socket.emit('privateMsg', {reciver, message, sender:username, reciverID});
         setMessages({to:reciver,sender:username,text:message});
         setMessage('');
         if(messages[0].messages.length > 0){
@@ -134,8 +134,8 @@ const PrivateChat = ({username, reciver, usersSidebarClass, setMessages, message
     }
 
     useEffect(()=>{
-        socket.on(`reciveMsg${id}`,()=>{
-            if(messages[0].messages.length > 0){
+        socket.on(`reciveMsg${username}`,()=>{
+            if(messages[0] && messages[0].messages.length > 0){
                 focusView.current.scrollIntoView({ block: 'start' })
             }
         })

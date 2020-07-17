@@ -471,6 +471,20 @@
     }
 }
 
+.notification {
+    animation: 1s linear blink infinite;
+}
+
+@keyframes blink {
+    0% {
+        border: 1px solid rgb(0, 184, 0);
+    } 50% {
+        border: 1px solid rgb(0, 80, 184);
+    } 100% {
+        border: 1px solid rgb(0, 184, 0);
+    }
+}
+
 .chat {
     margin: 0 auto 0 auto;
     max-width: 800px;

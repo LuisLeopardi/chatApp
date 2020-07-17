@@ -507,6 +507,21 @@
   font-weight: bold;
 }
 
+.notification {
+  animation: 1s linear blink infinite;
+}
+
+@keyframes blink {
+  0% {
+    border: 1px solid #00b800;
+  }
+  50% {
+    border: 1px solid #0050b8;
+  }
+  100% {
+    border: 1px solid #00b800;
+  }
+}
 .chat {
   margin: 0 auto 0 auto;
   max-width: 800px;
