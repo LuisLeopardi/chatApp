@@ -129,7 +129,7 @@ componentDidMount(){
             });
           }, 1000);
 
-          socket.on(`reciveMsg${username}`, ({reciver,message,sender})=>{
+          socket.on(`reciveMsg${data.username}`, ({reciver,message,sender})=>{
             this.setMessages({to:reciver,sender,text:message});
           })
           
