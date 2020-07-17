@@ -122,19 +122,10 @@ const PrivateChat = ({username, reciver, usersSidebarClass, setMessages, message
     const [ message, setMessage ] = useState('');
     const focusView = useRef(null)
 
-    useEffect(()=>{
-        socket.on(`reciveMsg${username}`, ({reciver,message,sender})=>{
-            console.log('recived')
-            setMessages({to:reciver,sender,text:message});
-            console.log(messages)
-        })
-    })
-
     const sendMessage = () => {
         socket.emit('privateMsg', {reciver, message, sender:username, reciverID})
         setMessages({to:reciver,sender:username,text:message});
         setMessage('');
-       // console.log(messages[0].messages)
     }
 
 return (
