@@ -132,7 +132,7 @@ const PrivateChat = ({username, reciver, usersSidebarClass, setMessages, message
 
     const sendMessage = () => {
         socket.emit('privateMsg', {reciver, message, sender:username, reciverID})
-        setMessages({to:reciver,sender,text:message});
+        setMessages({to:reciver,sender:username,text:message});
         setMessage('');
        // console.log(messages[0].messages)
     }
