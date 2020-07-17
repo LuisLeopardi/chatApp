@@ -116,7 +116,7 @@ componentDidMount(){
             socket.emit('activeUser', {username:data.username, room:this.state.isInRoom, avatar:data.avatar, id:socket.id })
 
             socket.on('online', ({username, room, avatar, id})=>{
-              //console.log(room, 'room')
+           
               const alredyOnline = this.state.online.find(e=> username===e.username);
               
               if (alredyOnline) return;
@@ -125,25 +125,22 @@ componentDidMount(){
               console.log(indexOfUser, 'indexOfUser')
 
               if(username===data.username) return;
-              
-              if(indexOfUser) const roomChanged = this.state.online[indexOfUser].room === room;
 
-              console.log(roomChanged, 'roomChanged')
+              const shouldUpdateRoom = () =>{ 
+                if(this.state.online[indexOfUser].room === room){
+                  return (
+                    this.setState(prevState => ({
+                      online: [...prevState.online, this.state.online[indexOfUser] = {
+                        username,
+                        room,
+                        avatar 
+                      }]
+                   }))
+                  )   
+                } 
+            }
 
-              const updateRoom = () =>{ 
-                const roomChanged = this.state.online[indexOfUser].room === room
-                console.log(room, 'update room')
-                this.setState(prevState => ({
-                online: [...prevState.online, this.state.online[roomChanged] = {
-                  username,
-                  room,
-                  avatar 
-                }]
-              }))}
-
-              if (roomChanged) return updateRoom();
-
-              console.log(room, 'do not update room')
+              if (indexOfUser) shouldUpdateRoom();
 
               this.setState(prevState => ({
                 online: [...prevState.online, {username, room, avatar, id}]
