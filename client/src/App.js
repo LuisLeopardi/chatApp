@@ -143,7 +143,7 @@ componentDidMount(){
 
           socket.on(`reciveMsg${socket.id}`, ({reciver,message,sender})=>{
             this.setMessages({to:reciver,sender,text:message});
-            if(sender !== username) {
+            if(sender !== data.username) {
               this.setState(prevState=> ({
               ...prevState.newMessage,
               sender
