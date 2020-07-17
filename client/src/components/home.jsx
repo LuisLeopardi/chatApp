@@ -24,7 +24,7 @@ componentDidMount(){
 
 render() {
 
-const {avatarArray, username, avatar, online, selected, setSelected, messages, setMessages} = this.props;
+const {avatarArray, username, avatar, online, selected, setSelected, messages, setMessages, id} = this.props;
 
 return (
     <main>{
@@ -40,6 +40,7 @@ return (
             avatarArray={avatarArray}
             messages={messages}
             setMessages={setMessages}
+            id={id}
         />
         :
         <LoginForStartChatting/>
@@ -59,7 +60,7 @@ return (
 </div> 
 )}
 
-const Dashboard = ({username, online, avatarArray, selected, setSelected, messages, setMessages}) => {
+const Dashboard = ({username, online, avatarArray, selected, setSelected, messages, setMessages, id}) => {
 const [reciver, setReciver] = useState(null);
 const [reciverID, setID] = useState(null)
 const [usersSidebarClass, setClass] = useState('usersOnline');
@@ -107,7 +108,7 @@ return (
         selected === group ?
         <PublicChat username={username} usersSidebarClass={usersSidebarClass} setClass={setClass}/>
         :
-        <PrivateChat focus={focus} setFocus={setFocus} reciverID={reciverID} setMessages={setMessages} messages={messages} usersSidebarClass={usersSidebarClass} selected={selected} reciver={reciver} username={username}/>
+        <PrivateChat id={id} setFocus={setFocus} reciverID={reciverID} setMessages={setMessages} messages={messages} usersSidebarClass={usersSidebarClass} selected={selected} reciver={reciver} username={username}/>
     }
 
     <div style={focus?null:divStyle} className={focus?'none':'seeWhosOnline'} onClick={showUsers}> 
@@ -118,7 +119,7 @@ return (
 
 </div> 
 )}
-const PrivateChat = ({username, reciver, usersSidebarClass, setMessages, messages, reciverID, setFocus, focus}) => {
+const PrivateChat = ({username, reciver, usersSidebarClass, setMessages, messages, reciverID, setFocus, id}) => {
 
     const [ message, setMessage ] = useState('');
     const focusView = useRef(null)
@@ -127,7 +128,18 @@ const PrivateChat = ({username, reciver, usersSidebarClass, setMessages, message
         socket.emit('privateMsg', {reciver, message, sender:username, reciverID})
         setMessages({to:reciver,sender:username,text:message});
         setMessage('');
+        if(messages[0].messages.length > 0){
+            focusView.current.scrollIntoView({ block: 'start' })
+        }
     }
+
+    useEffect(()=>{
+        socket.on(`reciveMsg${id}`,()=>{
+            if(messages[0].messages.length > 0){
+                focusView.current.scrollIntoView({ block: 'start' })
+            }
+        })
+    })
 
 return (
     <div className={usersSidebarClass==='usersOnline'? 'dashboard' : 'dashboard smaller'}>
@@ -155,7 +167,7 @@ return (
                     }
                 </div>
                 <div className='chatInputs'> 
-                    <input onFocus={()=>setFocus(!focus)} type="text" value={message} onChange={e=>setMessage(e.target.value)}/>
+                    <input onBlur={()=>setFocus(false)} onFocus={()=>setFocus(true)} type="text" value={message} onChange={e=>setMessage(e.target.value)}/>
                     <button onClick={sendMessage}> send </button>
                 </div>
                 

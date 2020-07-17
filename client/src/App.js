@@ -36,7 +36,6 @@ state = {
 }
 
 setMessages = ({to, sender, text}) => {
-  console.log(this.state)
   let messagesArray = [...this.state.messages]
   const chatIndex = this.state.messages.findIndex(e=>e.id===`${to}${sender}`||`${sender}${to}`)
   if(chatIndex >= 0) {
@@ -206,7 +205,8 @@ return (
             username={username} 
             avatar={avatar} 
             online={online}
-            messages={messages} 
+            messages={messages}
+            id={socket.id} 
           />)} />
         <Route path='/register' component={Register} />
         <Route path='/login' component={Login} />

@@ -1,6 +1,5 @@
 import React, {useState, useEffect} from 'react';
 import {Link} from 'react-router-dom';
-import edit from '../img/edit.svg';
 import defaultpic from '../img/avatars/defaultpic.svg';
 import pic1 from '../img/avatars/pic1.svg';
 import pic2 from '../img/avatars/pic2.svg';
