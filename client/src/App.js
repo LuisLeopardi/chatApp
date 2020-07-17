@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Route, BrowserRouter as Router, Switch, Link} from 'react-router-dom'
+import {Route, BrowserRouter as Router, Switch} from 'react-router-dom'
 import './scss/style.scss';
 import Register from './components/register.jsx';
 import Login from './components/login.jsx';
@@ -106,7 +106,7 @@ componentDidMount(){
       } else if (data.user === null) {
           this.setState({ isFinishedLoading:true })
       } else {
-          if(window.location.pathname == "/login" || window.location.pathname == "/register" ) {
+          if(window.location.pathname === "/login" || window.location.pathname === "/register" ) {
             window.location='/'
           }
           this.setState({username:data.username, avatar:data.avatar, isFinishedLoading:true})
@@ -163,17 +163,17 @@ return (
       <nav className={isInDashboard?'navigation':'none'}>
 
         <div className={ username? 'userPicAndName' : 'none'} onClick={username? this.click : null}>
-          <img className='userPic' src={ avatar === 'default'? defaultpic : avatar }/>
+          <img className='userPic' src={ avatar === 'default'? defaultpic : avatar } alt='userPic'/>
           <div className='optionsWrap'> 
             <p className='username'> {username} </p>
             <div className='options' style={optionStyle}>
               <div>
-                <img src={profile}/> 
+                <img src={profile} alt='profile'/> 
                 <a href='/profile'> PROFILE </a> 
               </div>
 
               <div>
-                <img src={lightBulb}/> 
+                <img src={lightBulb} alt='logout'/> 
                 <p onClick={this.logout}> LOGOUT </p> 
               </div>  
             </div>
@@ -181,11 +181,11 @@ return (
         </div>
         
         <div onClick={()=>this.setSelected(chat)} className={!username? 'none' : selected===chat? 'icon active' : 'icon'}> 
-          <img src={chat}/>
+          <img alt='chat' src={chat}/>
         </div>
         
         <div onClick={()=>this.setSelected(group)} className={!username? 'none' : selected===group? 'icon active' : 'icon'}>
-          <img src={group}/>
+          <img alt='groupChat' src={group}/>
         </div>
         
         <a className={ !username? 'links logo' : 'none'} href='/'> Chat App </a>  

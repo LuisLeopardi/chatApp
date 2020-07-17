@@ -86,7 +86,7 @@ const closeUsers = () => {
 return (
 <div className='lobby'>
     <div className={usersSidebarClass}>
-        <img onClick={closeUsers} className='close' src={close}/>
+        <img alt='close' onClick={closeUsers} className='close' src={close}/>
         {
             online.map(obj=>
                 <div key={obj.username} className={usersSidebarClass === 'usersOnline'? 'userContainer opacity' : 'userContainer '}>
