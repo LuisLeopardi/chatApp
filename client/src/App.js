@@ -127,6 +127,7 @@ componentDidMount(){
               if(username===data.username) return;
 
               const shouldUpdateRoom = () =>{ 
+                console.log(indexOfUser, 'should update')
                 if(this.state.online[indexOfUser].room === room){
                   return (
                     this.setState(prevState => ({
@@ -138,7 +139,7 @@ componentDidMount(){
                    }))
                   )   
                 } 
-            }
+              }
 
               if (indexOfUser) shouldUpdateRoom();
 
