@@ -32,7 +32,7 @@ state = {
   selected: group,
   optionStyle: {display:'none'},
   isInDashboard: true,
-  messages:[],
+  messages:[]
 }
 
 setMessages = ({to, sender, text}) => {
@@ -129,7 +129,7 @@ componentDidMount(){
             });
           }, 1000);
 
-          socket.on(`reciveMsg${data.username}`, ({reciver,message,sender})=>{
+          socket.on(`reciveMsg${socket.id}`, ({reciver,message,sender})=>{
             this.setMessages({to:reciver,sender,text:message});
           })
           

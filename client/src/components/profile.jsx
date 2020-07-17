@@ -14,8 +14,6 @@ const Profile = ({avatar, username, setLocation}) => {
 
     const avatarArray = [defaultpic, pic1, pic2, pic3, pic4, pic5, pic6, pic7];
     const [profileAvatar, setAvatartochange] = useState('');
-    const [usernameToChange, setUsernameToChange,] = useState('');
-    const [disabledInput, setInput] = useState(true);
 
     const changeAvatar = () => {
         fetch('https://chatapp-luisleopardi.herokuapp.com/profile', {
@@ -33,21 +31,6 @@ const Profile = ({avatar, username, setLocation}) => {
 
     }
 
-    const changeUsername = () => {
-        fetch('http://localhost:5000/profile', {
-            method: "post",
-            credentials: 'include',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body:JSON.stringify({username, usernameToChange, function:'changeUsername'})
-        })
-        .then(()=>{
-            window.location.reload()
-        })
-    }
-
     return (
 
         <div className='profile' onLoad={()=>setLocation(false)}>
@@ -57,17 +40,8 @@ const Profile = ({avatar, username, setLocation}) => {
             <div className='profileInfoWrap'>
                 <img className='profileAvatar' src={avatar} alt="profileAvatar"/>
                 <div>
-                    <p> {username} </p>
-                    <div className={disabledInput?'none':'confirm'}>
-                        <input type="text" defaultValue={username} onChange={e=>setUsernameToChange(e.target.value)}/>
-                         <b> change </b>  
-                         <div className='yesOrNo'>
-                            <p className='yes' onClick={changeUsername}>yes</p>
-                            <p className='no' onClick= {()=> setInput(!disabledInput)}>no</p>  
-                        </div>    
-                    </div>        
+                    <p> {username} </p>      
                 </div>
-                <img className={disabledInput?'changeUsername':'none'} src={edit} alt="edit" onClick= {()=> setInput(!disabledInput)}/>  
             </div>
 
             

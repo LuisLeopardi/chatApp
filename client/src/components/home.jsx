@@ -63,7 +63,8 @@ const Dashboard = ({username, online, avatarArray, selected, setSelected, messag
 const [reciver, setReciver] = useState(null);
 const [reciverID, setID] = useState(null)
 const [usersSidebarClass, setClass] = useState('usersOnline');
-const [divStyle, setStyle] = useState({ display: 'flex', opacity:'1' })
+const [divStyle, setStyle] = useState({ display: 'flex', opacity:'1' });
+const [focus, setFocus] = useState(false)
 
 const showUsers = () => {
     setClass(usersSidebarClass==='usersOnline'? 'usersOnline deploy' : 'usersOnline');
@@ -106,10 +107,10 @@ return (
         selected === group ?
         <PublicChat username={username} usersSidebarClass={usersSidebarClass} setClass={setClass}/>
         :
-        <PrivateChat reciverID={reciverID} setMessages={setMessages} messages={messages} usersSidebarClass={usersSidebarClass} selected={selected} reciver={reciver} username={username}/>
+        <PrivateChat focus={focus} setFocus={setFocus} reciverID={reciverID} setMessages={setMessages} messages={messages} usersSidebarClass={usersSidebarClass} selected={selected} reciver={reciver} username={username}/>
     }
 
-    <div style={divStyle} className='seeWhosOnline' onClick={showUsers}> 
+    <div style={focus?null:divStyle} className={focus?'none':'seeWhosOnline'} onClick={showUsers}> 
         <span> {online.length} </span>
         <p>online</p> 
         <img src={arrow} alt="arrow"/> 
@@ -117,7 +118,7 @@ return (
 
 </div> 
 )}
-const PrivateChat = ({username, reciver, usersSidebarClass, setMessages, messages, reciverID}) => {
+const PrivateChat = ({username, reciver, usersSidebarClass, setMessages, messages, reciverID, setFocus, focus}) => {
 
     const [ message, setMessage ] = useState('');
     const focusView = useRef(null)
@@ -139,10 +140,11 @@ return (
                 {
                 
                     messages[0] && messages[0].messages.length > 0 ?
-                    messages[0].messages.map(e=>
+                    messages[0].messages.map((e,i)=>
                         <div 
                             className={e.sender !== username ? 'message' : 'yourMessage'} 
-                            key={Math.random() * 10000 + e.sender}
+                            key={Math.random() * 1000000 + e.sender}
+                            ref={i === messages[0].messages.length - 1? focusView : null}
                             >
                             <p>{e.text}</p> 
                         </div>  
@@ -153,7 +155,7 @@ return (
                     }
                 </div>
                 <div className='chatInputs'> 
-                    <input type="text" value={message} onChange={e=>setMessage(e.target.value)}/>
+                    <input onFocus={()=>setFocus(!focus)} type="text" value={message} onChange={e=>setMessage(e.target.value)}/>
                     <button onClick={sendMessage}> send </button>
                 </div>
                 
