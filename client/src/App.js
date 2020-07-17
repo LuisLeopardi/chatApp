@@ -123,12 +123,14 @@ componentDidMount(){
               
               const roomChanged = this.state.online.findIndex(e=> e.room !==  room)
               
-              const updateRoom = this.setState(prevState => ({
+              const updateRoom = () =>{ 
+                this.setState(prevState => ({
                 online: [...prevState.online, this.state.online[roomChanged] = {
-                  ...this.state.online[roomChanged],
-                  room
+                  username,
+                  room,
+                  avatar 
                 }]
-              }))
+              }))}
 
               if (roomChanged) return updateRoom();
 
