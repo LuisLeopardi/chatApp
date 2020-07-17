@@ -87,7 +87,7 @@ io.on('connection', socket => {
   });
 
   socket.on('privateMsg', ({reciver, message, sender, reciverID})=>{
-    socket.broadcast.emit(`reciveMsg$reciver${reciver}`, {reciver,message,sender});
+    socket.broadcast.emit(`reciveMsg${reciver}`, {reciver,message,sender});
   })
 
 });
