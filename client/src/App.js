@@ -122,7 +122,8 @@ componentDidMount(){
               if (alredyOnline) return;
 
               const indexOfUser = this.state.online.findIndex(e=>{
-                console.log(e);
+                console.log(username)
+                console.log(e.username);
                 return e.username===username
               })
               console.log(indexOfUser, 'indexOfUser')
