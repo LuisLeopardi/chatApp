@@ -152,8 +152,10 @@ componentDidMount(){
           socket.on(`reciveMsg${data.username}`, ({reciver,message,sender})=>{
             this.setMessages({to:reciver,sender,text:message});
             this.setState(prevState=> ({
-              ...prevState.newMessage,
-              sender
+              newMessage:[
+                ...prevState.newMessage,
+                sender
+              ]  
             }))
             
             console.log(this.state.newMessage)
