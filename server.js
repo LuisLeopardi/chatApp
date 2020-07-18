@@ -3,7 +3,7 @@ const app = express();
 const mongoose = require('mongoose');
 const cors = require('cors');
 const session = require('express-session');
-const User = require('./models/users');
+const auth = require('./auth')
 const MongoStore = require ('connect-mongo')(session);
 const path = require('path');
 require('dotenv').config()
@@ -65,6 +65,8 @@ app.use('/logout', logout);
 app.use('/profile', profile);
 
 // CHAT
+
+io.use(auth);
 
 io.on('connection', socket => {
 
