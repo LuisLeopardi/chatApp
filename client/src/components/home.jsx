@@ -118,7 +118,7 @@ return (
 
 </div> 
 )}
-const PrivateChat = ({username, reciver, usersSidebarClass, setMessages, messages, reciverID, setFocus}) => {
+const PrivateChat = ({username, reciver, usersSidebarClass, setMessages, messages, reciverID, setFocus, removeNotification}) => {
 
     const [ message, setMessage ] = useState('');
     const focusView = useRef(null)
