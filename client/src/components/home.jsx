@@ -118,7 +118,7 @@ return (
         selected === group ?
         <PublicChat username={username} usersSidebarClass={usersSidebarClass} setClass={setClass}/>
         :
-        <PrivateChat removeNotification={removeNotification} setFocus={setFocus} reciverID={reciverID} setMessages={setMessages} messages={messages} usersSidebarClass={usersSidebarClass} selected={selected} reciver={reciver} username={username}/>
+        <PrivateChat newMessage={newMessage} removeNotification={removeNotification} setFocus={setFocus} reciverID={reciverID} setMessages={setMessages} messages={messages} usersSidebarClass={usersSidebarClass} selected={selected} reciver={reciver} username={username}/>
     }
 
     <div style={focus?null:divStyle} className={focus?'none': newMessage.length > 0? 'seeWhosOnline notification' : 'seeWhosOnline'} onClick={showUsers}> 
@@ -128,7 +128,7 @@ return (
 
 </div> 
 )}
-const PrivateChat = ({username, reciver, usersSidebarClass, setMessages, messages, reciverID, setFocus, removeNotification}) => {
+const PrivateChat = ({username, reciver, usersSidebarClass, setMessages, messages, reciverID, setFocus, removeNotification, newMessage}) => {
 
     const [ message, setMessage ] = useState('');
     const focusView = useRef(null)
@@ -149,7 +149,8 @@ const PrivateChat = ({username, reciver, usersSidebarClass, setMessages, message
                 focusView.current.scrollIntoView({ block: 'start' })
             }
         })
-        removeNotification(reciver)
+        const filter = newMessage.find(e=>e===reciver);
+        if(filter)removeNotification(reciver);
     })
 
 return (
