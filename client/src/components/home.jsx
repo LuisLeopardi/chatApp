@@ -134,7 +134,8 @@ const PrivateChat = ({username, reciver, usersSidebarClass, setMessages, message
     }
 
     useEffect(()=>{
-        socket.on(`reciveMsg${username}`,()=>{
+        socket.on(`reciveMsg${username}`,({message,sender})=>{
+            setMessages({to:username,sender,text:message});
             if(messages[0] && messages[0].messages.length > 0){
                 focusView.current.scrollIntoView({ block: 'start' })
             }
@@ -156,7 +157,7 @@ return (
                         <div 
                             className={e.sender !== username ? 'message' : 'yourMessage'} 
                             key={Math.random() * 1000000 + e.sender}
-                            ref={i === messages[0].messages.length - 1? focusView : null}
+                            ref={i === messages[0].messages.length? focusView : null}
                             >
                             <p>{e.text}</p> 
                         </div>  
