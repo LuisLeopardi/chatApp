@@ -118,6 +118,8 @@ componentDidMount(){
             socket.on('online', ({username, room, avatar, id})=>{
            
               const alredyOnline = this.state.online.find(e=>username===e.username);
+
+              if(username===data.username) return;
               
               if (alredyOnline) return;
 
@@ -128,7 +130,7 @@ componentDidMount(){
               })
               console.log(indexOfUser, 'indexOfUser')
 
-              if(username===data.username) return;
+             
 
               const shouldUpdateRoom = () =>{ 
                 console.log(indexOfUser, 'should update')
