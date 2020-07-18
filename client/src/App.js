@@ -243,7 +243,7 @@ return (
             messages={messages}
             id={socket.id}
             newMessage={newMessage} 
-            removeNotification={removeNotification}
+            removeNotification={this.removeNotification}
           />)} />
         <Route path='/register' component={Register} />
         <Route path='/login' component={Login} />
