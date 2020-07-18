@@ -84,6 +84,9 @@ setChatRoom = room => {
 
 removeNotification = name => {
   const removeByName = this.state.newMessage.filter(e=> e !== name)
+  this.setState({
+    newMessage:removeByName
+  })
 }
 
 logout = () => {
