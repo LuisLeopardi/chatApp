@@ -67,7 +67,7 @@ app.use('/profile', profile);
 // CHAT
 
 io.use((socket, next)=>{
-  auth();
+  auth;
   next();
 });
 
