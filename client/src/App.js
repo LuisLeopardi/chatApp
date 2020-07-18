@@ -120,8 +120,6 @@ componentDidMount(){
               const alredyOnline = this.state.online.find(e=>username===e.username);
 
               if(username===data.username) return;
-              
-              if (alredyOnline) return;
 
               const indexOfUser = this.state.online.findIndex(e=>{
                 console.log(username)
@@ -150,6 +148,8 @@ componentDidMount(){
               }
 
               if (indexOfUser >= 0 ) shouldUpdateRoom();
+
+              if (alredyOnline) return;
 
               this.setState(prevState => ({
                 online: [...prevState.online, {username, room, avatar, id}]
