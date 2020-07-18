@@ -83,13 +83,22 @@ const closeUsers = () => {
     }, 300);
 }
 
+const userContainerClass = e => {
+    if(usersSidebarClass === 'usersOnline') return usersSidebarClass === 'usersOnline';
+    const compare = newMessage.find(message=> e === message);
+    compare?
+    'userContainer newMessage'
+    :
+    'userContainer'
+}
+
 return (
 <div className='lobby'>
     <div className={usersSidebarClass}>
         <img alt='close' onClick={closeUsers} className='close' src={close}/>
         {
             online.map(obj=>
-                <div key={obj.username} className={usersSidebarClass === 'usersOnline'? 'userContainer opacity' : 'userContainer '}>
+                <div key={obj.username} className={()=>userContainerClass(obj.username)}>
                     <img src={avatarArray.filter(e=>e===obj.avatar)} alt="userPic" className='userIcon'/>
                     <div className='userInfoWrap'> 
                         <p className='onlineUsername'> {obj.username} </p>
@@ -111,7 +120,7 @@ return (
         <PrivateChat removeNotification={removeNotification} setFocus={setFocus} reciverID={reciverID} setMessages={setMessages} messages={messages} usersSidebarClass={usersSidebarClass} selected={selected} reciver={reciver} username={username}/>
     }
 
-    <div style={focus?null:divStyle} className={focus?'none': newMessage? 'seeWhosOnline notification' : 'seeWhosOnline'} onClick={showUsers}> 
+    <div style={focus?null:divStyle} className={focus?'none': newMessage.length > 0? 'seeWhosOnline notification' : 'seeWhosOnline'} onClick={showUsers}> 
         <span> {online.length} </span>
         <p>online</p> 
     </div>

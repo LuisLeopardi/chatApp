@@ -373,6 +373,21 @@
   transition: 0.5s ease-in-out all;
 }
 
+.newMessage {
+  animation: 1s linear newMessageAnimation infinite;
+}
+
+@keyframes newMessageAnimation {
+  0% {
+    border: 1px solid #b3b3b3;
+  }
+  50% {
+    border: 1px solid #006eff;
+  }
+  100% {
+    border: 1px solid #b3b3b3;
+  }
+}
 .userIcon {
   height: 40px;
   width: 40px;
@@ -487,6 +502,7 @@
   bottom: 10px;
   left: 5px;
   padding: 10px;
+  color: #222222;
   cursor: pointer;
   transition: 0.3s ease-in-out all;
 }
@@ -500,26 +516,30 @@
   margin: 0 3px 0 0;
 }
 .seeWhosOnline p {
-  color: #222222;
   font-weight: bold;
 }
 
 .notification {
   animation: 1s linear blink infinite;
-  span-animation: 1s linear spanblink infinite;
+}
+.notification span {
+  animation: 1s linear spanblink infinite;
 }
 
 @keyframes blink {
   0% {
     border: 1px solid #00b800;
     background-color: #ebebeb;
+    color: #222222;
   }
   50% {
     border: 1px solid #0050b8;
     background-color: #0050b8;
+    color: white;
   }
   100% {
     border: 1px solid #00b800;
+    color: #222222;
     background-color: #ebebeb;
   }
 }
