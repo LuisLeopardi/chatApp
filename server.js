@@ -66,7 +66,10 @@ app.use('/profile', profile);
 
 // CHAT
 
-io.use(auth);
+io.use((socket, next)=>{
+  auth();
+  next();
+});
 
 io.on('connection', socket => {
 

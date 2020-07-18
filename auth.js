@@ -7,7 +7,7 @@ const auth = async (req, res, next) => {
     
   if(!token) return res.status(200).json({user:null});
   
-  const decoded = await jwt.verify(token, process.env.TOKEN_SECRET, (err, decoded) => {
+  await jwt.verify(token, process.env.TOKEN_SECRET, (err, decoded) => {
 
   if (err) return res.status(404).json({user:null});
 
