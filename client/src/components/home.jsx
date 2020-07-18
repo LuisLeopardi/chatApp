@@ -40,6 +40,7 @@ return (
             avatarArray={avatarArray}
             messages={messages}
             setMessages={setMessages}
+            newMessage={newMessage}
         />
         :
         <LoginForStartChatting/>
@@ -110,7 +111,7 @@ return (
         <PrivateChat setFocus={setFocus} reciverID={reciverID} setMessages={setMessages} messages={messages} usersSidebarClass={usersSidebarClass} selected={selected} reciver={reciver} username={username}/>
     }
 
-    <div style={focus?null:divStyle} className={focus?'none': newMessage? '' : 'seeWhosOnline'} onClick={showUsers}> 
+    <div style={focus?null:divStyle} className={focus?'none': newMessage? 'seeWhosOnline notification' : 'seeWhosOnline'} onClick={showUsers}> 
         <span> {online.length} </span>
         <p>online</p> 
         <img src={arrow} alt="arrow"/> 
