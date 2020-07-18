@@ -123,13 +123,9 @@ componentDidMount(){
 
             if(username===data.username) return;
 
-            console.log(room)
-
             const indexOfUser = this.state.online.findIndex(e=>e.username===username)
-            console.log(indexOfUser, 'indexOfUser')
 
             const shouldUpdateRoom = () =>{ 
-              console.log(indexOfUser, 'should update')
               if(this.state.online[indexOfUser].room !== room){
                 const updateUser = this.state.online.map(e=>{
                   if(e.username === this.state.online[indexOfUser].username) e.room=room;
@@ -155,12 +151,11 @@ componentDidMount(){
 
           socket.on(`reciveMsg${data.username}`, ({reciver,message,sender})=>{
             this.setMessages({to:reciver,sender,text:message});
-            if(sender !== data.username) {
-              this.setState(prevState=> ({
+            this.setState(prevState=> ({
               ...prevState.newMessage,
               sender
             }))
-            }
+            
             console.log(this.state.newMessage)
 
           })

@@ -156,7 +156,7 @@ return (
                         <div 
                             className={e.sender !== username ? 'message' : 'yourMessage'} 
                             key={Math.random() * 1000000 + e.sender}
-                            ref={i === messages[0].messages.length? focusView : null}
+                            ref={i === messages[0].messages.length - 1? focusView : null}
                             >
                             <p>{e.text}</p> 
                         </div>  
