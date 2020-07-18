@@ -131,15 +131,13 @@ componentDidMount(){
             const shouldUpdateRoom = () =>{ 
               console.log(indexOfUser, 'should update')
               if(this.state.online[indexOfUser].room !== room){
-                return (
-                  this.setState(prevState => ({
-                    online: [...prevState.online, this.state.online[indexOfUser] = {
-                      username,
-                      room,
-                      avatar 
-                    }]
-                  }))
-                )   
+                const updateUser = this.state.online.map(e=>{
+                  e.username === this.state.online[indexOfUser].username?
+                    e.room=room
+                  :
+                  null
+                })
+                return this.setState(updateUser);   
               } else {
                 return false;
               } 
