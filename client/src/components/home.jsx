@@ -86,10 +86,11 @@ const closeUsers = () => {
 const userContainerClass = e => {
     if(usersSidebarClass === 'usersOnline') return usersSidebarClass === 'usersOnline';
     const compare = newMessage.find(message=> e === message);
-    compare?
-    'userContainer newMessage'
-    :
-    'userContainer'
+    if (compare) {
+        return 'userContainer newMessage'
+    } else {
+        return 'userContainer'
+    }
 }
 
 return (
