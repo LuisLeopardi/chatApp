@@ -450,13 +450,9 @@
     position: fixed;
     bottom: 10px;
     left: 5px;
-    padding: 10px 5px 10px 5px;
+    padding: 10px;
     cursor: pointer;
     transition: 0.3s ease-in-out all;
-    img {
-        height: 17px;
-        margin: 0 0 0 5px;
-    }
     span {
         background-color: rgb(39, 201, 39);
         color: #fff;
@@ -479,10 +475,22 @@
 @keyframes blink {
     0% {
         border: 1px solid rgb(0, 184, 0);
+        background-color: rgb(235, 235, 235);
+        span {
+            background-color: rgb(39, 201, 39);
+        }
     } 50% {
         border: 1px solid rgb(0, 80, 184);
+        background-color: rgb(0, 80, 184);
+        span {
+            background-color: rgb(0, 80, 184);
+        }
     } 100% {
         border: 1px solid rgb(0, 184, 0);
+        background-color: rgb(235, 235, 235);
+        span {
+            background-color: rgb(39, 201, 39);
+        }
     }
 }
 

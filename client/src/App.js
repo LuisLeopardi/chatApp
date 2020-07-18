@@ -82,6 +82,10 @@ setChatRoom = room => {
   this.setState({isInRoom:room})
 }
 
+removeNotification = name => {
+  const removeByName = this.state.newMessage.filter(e=> e !== name)
+}
+
 logout = () => {
   fetch('https://chatapp-luisleopardi.herokuapp.com/logout', {
     method: "post",
@@ -239,6 +243,7 @@ return (
             messages={messages}
             id={socket.id}
             newMessage={newMessage} 
+            removeNotification={removeNotification}
           />)} />
         <Route path='/register' component={Register} />
         <Route path='/login' component={Login} />

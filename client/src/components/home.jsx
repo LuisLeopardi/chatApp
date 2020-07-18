@@ -6,7 +6,6 @@ import sendMessage from '../img/message.svg';
 import location from '../img/location.svg';
 import tornado from '../img/tornado.svg';
 import volcano from '../img/volcano.svg';
-import arrow from '../img/arrow.svg';
 import close from '../img/close.svg';
 import storm from '../img/storm.svg';
 import snow from '../img/snow.svg';
@@ -24,7 +23,7 @@ componentDidMount(){
 
 render() {
 
-const {newMessage, avatarArray, username, avatar, online, selected, setSelected, messages, setMessages} = this.props;
+const {removeNotification, newMessage, avatarArray, username, avatar, online, selected, setSelected, messages, setMessages} = this.props;
 
 return (
     <main>{
@@ -41,6 +40,7 @@ return (
             messages={messages}
             setMessages={setMessages}
             newMessage={newMessage}
+            removeNotification={removeNotification}
         />
         :
         <LoginForStartChatting/>
@@ -60,7 +60,7 @@ return (
 </div> 
 )}
 
-const Dashboard = ({username, online, avatarArray, selected, setSelected, messages, setMessages, newMessage}) => {
+const Dashboard = ({username, online, avatarArray, selected, setSelected, messages, setMessages, newMessage, removeNotification}) => {
 const [reciver, setReciver] = useState(null);
 const [reciverID, setID] = useState(null)
 const [usersSidebarClass, setClass] = useState('usersOnline');
@@ -108,13 +108,12 @@ return (
         selected === group ?
         <PublicChat username={username} usersSidebarClass={usersSidebarClass} setClass={setClass}/>
         :
-        <PrivateChat setFocus={setFocus} reciverID={reciverID} setMessages={setMessages} messages={messages} usersSidebarClass={usersSidebarClass} selected={selected} reciver={reciver} username={username}/>
+        <PrivateChat removeNotification={removeNotification} setFocus={setFocus} reciverID={reciverID} setMessages={setMessages} messages={messages} usersSidebarClass={usersSidebarClass} selected={selected} reciver={reciver} username={username}/>
     }
 
     <div style={focus?null:divStyle} className={focus?'none': newMessage? 'seeWhosOnline notification' : 'seeWhosOnline'} onClick={showUsers}> 
         <span> {online.length} </span>
         <p>online</p> 
-        <img src={arrow} alt="arrow"/> 
     </div>
 
 </div> 
@@ -140,6 +139,7 @@ const PrivateChat = ({username, reciver, usersSidebarClass, setMessages, message
                 focusView.current.scrollIntoView({ block: 'start' })
             }
         })
+        removeNotification(reciver)
     })
 
 return (
