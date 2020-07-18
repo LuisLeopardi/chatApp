@@ -99,7 +99,7 @@ return (
         <img alt='close' onClick={closeUsers} className='close' src={close}/>
         {
             online.map(obj=>
-                <div key={obj.username} className={()=>userContainerClass(obj.username)}>
+                <div key={obj.username} className={userContainerClass(obj.username)}>
                     <img src={avatarArray.filter(e=>e===obj.avatar)} alt="userPic" className='userIcon'/>
                     <div className='userInfoWrap'> 
                         <p className='onlineUsername'> {obj.username} </p>
