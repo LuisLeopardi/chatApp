@@ -3,7 +3,6 @@ const app = express();
 const mongoose = require('mongoose');
 const cors = require('cors');
 const session = require('express-session');
-const auth = require('./auth')
 const MongoStore = require ('connect-mongo')(session);
 const path = require('path');
 require('dotenv').config()
@@ -66,10 +65,12 @@ app.use('/profile', profile);
 
 // CHAT
 
-io.use((socket, next)=>{
-  auth;
-  next();
-});
+const socketioJwt   = require('socketio-jwt');
+
+io.use(socketioJwt.authorize({
+  secret: process.env.TOKEN_SECRET,
+  handshake: true
+}));
 
 io.on('connection', socket => {
 
